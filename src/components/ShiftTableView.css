@@ -167,6 +167,12 @@
   line-height: 1.2;
   padding: 6px 4px;
 }
+.today-cell.has-event .shift-type {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2px 6px;
+  display: inline-block;
+}
 .shift-cell:not(.has-event) { color: var(--inkSoft); }
 
 .shift-table-empty {
