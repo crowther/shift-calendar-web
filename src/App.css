@@ -122,6 +122,8 @@
 
 /* Month nav toolbar */
 .fc-toolbar { margin-bottom: 0 !important; padding: 16px 0 !important; }
+.fc-toolbar-chunk:first-child,
+.fc-toolbar-chunk:last-child { flex: 1; }
 .fc-toolbar-title {
   font-family: 'Public Sans', sans-serif !important;
   font-size: 22px !important;
