@@ -117,7 +117,7 @@
 }
 
 /* Week-start separator (Monday) */
-.shift-table tbody tr.week-start > * { border-top: 2px solid var(--rule); }
+.shift-table tbody tr.week-start > * { border-top: 2px solid var(--ink); }
 
 /* Date cell */
 .date-cell {
