@@ -1,0 +1,30 @@
+.view-selector {
+  display: flex;
+  gap: 4px;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.view-button {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: #666;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.view-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: #333;
+}
+
+.view-button.active {
+  background: white;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}

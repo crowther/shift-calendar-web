@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend
+  api:
+    build: ../shift-calendar-api
+    container_name: shift-calendar-api
+    volumes:
+      - ../shift-calendar-generator/template.csv:/generator/template.csv:ro
+      - ../shift-calendar-generator/generator.py:/generator/generator.py:ro
+    environment:
+      - TEMPLATE_FILE=/generator/template.csv
+      - GENERATOR_PATH=/generator
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # React Frontend
+  web:
+    build: .
+    container_name: shift-calendar-web
+    depends_on:
+      - api
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Caddy Reverse Proxy
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile.proxy:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - app-network
+    depends_on:
+      - web
+      - api
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

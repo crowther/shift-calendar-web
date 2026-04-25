@@ -1,0 +1,300 @@
+.shift-table-wrapper {
+  background: white;
+  border-radius: 8px;
+}
+
+.shift-table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 1.5em;
+  background: transparent;
+}
+
+.toolbar-chunk {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-chunk > *:not(:first-child) {
+  margin-left: 0.75em;
+}
+
+.nav-button {
+  background-color: #2c3e50;
+  border: 1px solid #2c3e50;
+  border-radius: 0;
+  padding: 0.4em 0.65em;
+  font-size: 1em;
+  line-height: 1.5;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 400;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  font-family: inherit;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+}
+
+.nav-button .fc-icon {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+.toolbar-chunk > .nav-button:first-child {
+  border-top-left-radius: 0.25em;
+  border-bottom-left-radius: 0.25em;
+}
+
+.toolbar-chunk > .nav-button:nth-child(2) {
+  border-top-right-radius: 0.25em;
+  border-bottom-right-radius: 0.25em;
+  margin-left: -1px;
+}
+
+.nav-button:hover {
+  background-color: #1e2b37;
+  border-color: #1a252f;
+}
+
+.today-button {
+  background-color: #2c3e50;
+  border: 1px solid #2c3e50;
+  border-radius: 0.25em;
+  padding: 0.4em 0.65em;
+  font-size: 1em;
+  line-height: 1.5;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 400;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  font-family: inherit;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+}
+
+.today-button:hover {
+  background-color: #1e2b37;
+  border-color: #1a252f;
+}
+
+.toolbar-title {
+  font-size: 1.75em;
+  margin: 0;
+  font-family: inherit;
+}
+
+.shift-table-container {
+  overflow-x: auto;
+}
+
+.shift-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border: 1px solid #ddd;
+}
+
+.shift-table thead {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.shift-table th {
+  padding: 16px 12px;
+  text-align: center;
+  font-weight: 400;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.shift-table th.date-column {
+  text-align: left;
+  width: 120px;
+  background: white;
+  position: sticky;
+  left: 0;
+  z-index: 11;
+}
+
+.shift-table th.shift-column {
+  min-width: 100px;
+  color: var(--shift-color);
+  font-size: 1em;
+  text-transform: capitalize;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.shift-table th.shift-column.inactive {
+  opacity: 0.3;
+}
+
+.shift-table tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.2s;
+}
+
+.shift-table tbody tr:hover {
+  background-color: #fcfcfc;
+}
+
+.shift-table tbody tr.weekend {
+  background-color: white;
+}
+
+.shift-table tbody tr.weekend:hover {
+  background-color: #fcfcfc;
+}
+
+.shift-table tbody tr.today {
+  background-color: #fffbf0;
+}
+
+.shift-table tbody tr.today:hover {
+  background-color: #fff8e6;
+}
+
+.date-cell {
+  padding: 12px;
+  background: white;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  border-right: 1px solid #ddd;
+}
+
+.shift-table tbody tr.weekend .date-cell {
+  background-color: white;
+}
+
+.shift-table tbody tr.weekend:hover .date-cell {
+  background-color: #fcfcfc;
+}
+
+.shift-table tbody tr.today .date-cell {
+  background-color: #fffbf0;
+}
+
+.shift-table tbody tr.today:hover .date-cell {
+  background-color: #fff8e6;
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.day-name {
+  font-weight: 700;
+  color: #000;
+  font-size: 1em;
+  text-transform: capitalize;
+  letter-spacing: 0;
+}
+
+.day-number {
+  color: #000;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.shift-cell {
+  padding: 12px;
+  text-align: center;
+  position: relative;
+  border: 1px solid #ddd;
+}
+
+.shift-cell.inactive {
+  background-color: #f8f9fa;
+  opacity: 0.4;
+}
+
+.shift-cell.has-event {
+  background-color: var(--shift-color);
+  color: white;
+  font-weight: 500;
+}
+
+.shift-type {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.shift-table-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .shift-table {
+    font-size: 12px;
+  }
+
+  .shift-table th,
+  .shift-table td {
+    padding: 8px 6px;
+  }
+
+  .shift-table th.date-column {
+    width: 80px;
+  }
+
+  .shift-table th.shift-column {
+    min-width: 60px;
+    font-size: 11px;
+  }
+
+  .day-name {
+    font-size: 10px;
+  }
+
+  .month-day {
+    font-size: 11px;
+  }
+
+  .shift-type {
+    font-size: 10px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .shift-table-container {
+    overflow: visible;
+  }
+
+  .shift-table {
+    page-break-inside: auto;
+  }
+
+  .shift-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .shift-table thead {
+    display: table-header-group;
+  }
+
+  .shift-cell.has-event {
+    background-color: var(--shift-color) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
