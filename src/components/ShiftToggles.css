@@ -36,7 +36,7 @@
 .shift-dot {
   width: 10px; height: 10px;
   display: inline-block;
-  border: 1.5px solid;
+  border: 2px solid;
   flex-shrink: 0;
 }
 
