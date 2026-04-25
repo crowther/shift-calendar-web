@@ -13,17 +13,11 @@
   --paperAlt: #f3f2f1;
   --rule:     #b1b4b6;
 
-  --s1: #d4351c;
-  --s2: #00703c;
-  --s3: #1d70b8;
-  --s4: #b58840;
-  --s5: #4c2c92;
-
-  --s1-soft: #fbeae8;
-  --s2-soft: #e6f1eb;
-  --s3-soft: #e7f0f8;
-  --s4-soft: #f5ebd7;
-  --s5-soft: #ebe6f3;
+  --s1: #d98c80;
+  --s2: #74b090;
+  --s3: #749ec8;
+  --s4: #c4a25e;
+  --s5: #9888c0;
 }
 
 html, body { height: 100%; }

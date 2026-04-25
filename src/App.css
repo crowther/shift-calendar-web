@@ -192,11 +192,11 @@
 }
 .fc-event-title { font-size: 12px !important; }
 
-.shift-event-1 { background: var(--s1) !important; border-left-color: color-mix(in srgb, var(--s1) 60%, #000) !important; color: #fff !important; }
-.shift-event-2 { background: var(--s2) !important; border-left-color: color-mix(in srgb, var(--s2) 60%, #000) !important; color: #fff !important; }
-.shift-event-3 { background: var(--s3) !important; border-left-color: color-mix(in srgb, var(--s3) 60%, #000) !important; color: #fff !important; }
-.shift-event-4 { background: var(--s4) !important; border-left-color: color-mix(in srgb, var(--s4) 60%, #000) !important; color: #fff !important; }
-.shift-event-5 { background: var(--s5) !important; border-left-color: color-mix(in srgb, var(--s5) 60%, #000) !important; color: #fff !important; }
+.shift-event-1 { background: var(--s1) !important; border-left-color: color-mix(in srgb, var(--s1) 50%, #000) !important; color: var(--ink) !important; }
+.shift-event-2 { background: var(--s2) !important; border-left-color: color-mix(in srgb, var(--s2) 50%, #000) !important; color: var(--ink) !important; }
+.shift-event-3 { background: var(--s3) !important; border-left-color: color-mix(in srgb, var(--s3) 50%, #000) !important; color: var(--ink) !important; }
+.shift-event-4 { background: var(--s4) !important; border-left-color: color-mix(in srgb, var(--s4) 50%, #000) !important; color: var(--ink) !important; }
+.shift-event-5 { background: var(--s5) !important; border-left-color: color-mix(in srgb, var(--s5) 50%, #000) !important; color: var(--ink) !important; }
 
 /* List view */
 .fc-list { border: 2px solid var(--ink) !important; border-radius: 0 !important; }

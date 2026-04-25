@@ -153,13 +153,13 @@
   vertical-align: middle;
 }
 /* Shift colours — after .shift-cell so they win on specificity */
-.shift-cell.shift-bg-1 { background-color: #d4351c; }
-.shift-cell.shift-bg-2 { background-color: #00703c; }
-.shift-cell.shift-bg-3 { background-color: #1d70b8; }
-.shift-cell.shift-bg-4 { background-color: #b58840; }
-.shift-cell.shift-bg-5 { background-color: #4c2c92; }
+.shift-cell.shift-bg-1 { background-color: var(--s1); }
+.shift-cell.shift-bg-2 { background-color: var(--s2); }
+.shift-cell.shift-bg-3 { background-color: var(--s3); }
+.shift-cell.shift-bg-4 { background-color: var(--s4); }
+.shift-cell.shift-bg-5 { background-color: var(--s5); }
 .shift-cell.has-event {
-  color: #fff;
+  color: var(--ink);
 }
 .shift-cell.has-event .shift-type {
   font-size: 12px;
