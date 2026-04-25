@@ -1,11 +1,11 @@
 import './ShiftToggles.css'
 
 const SHIFT_COLORS = {
-  1: '#e74c3c',
-  2: '#3498db',
-  3: '#2ecc71',
-  4: '#f39c12',
-  5: '#9b59b6'
+  1: '#d4351c',
+  2: '#00703c',
+  3: '#1d70b8',
+  4: '#b58840',
+  5: '#4c2c92',
 }
 
 function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
@@ -17,21 +17,18 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
             key={shift}
             className={`shift-button ${selectedShifts.includes(shift) ? 'active' : ''}`}
             onClick={() => onToggle(shift)}
-            style={{
-              '--shift-color': SHIFT_COLORS[shift]
-            }}
           >
+            <span
+              className="shift-dot"
+              style={{ borderColor: SHIFT_COLORS[shift], background: selectedShifts.includes(shift) ? SHIFT_COLORS[shift] : 'transparent' }}
+            />
             Shift {shift}
           </button>
         ))}
       </div>
       <div className="action-buttons">
-        <button className="action-button" onClick={onSelectAll}>
-          Select All
-        </button>
-        <button className="action-button" onClick={onClearAll}>
-          Clear All
-        </button>
+        <button className="action-button" onClick={onSelectAll}>All</button>
+        <button className="action-button" onClick={onClearAll}>None</button>
       </div>
     </div>
   )

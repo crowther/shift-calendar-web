@@ -1,10 +1,8 @@
-/**
- * Parse ICS calendar data and convert to FullCalendar event format
- */
-export function parseICS(icsText, selectedShifts) {
+export const ALL_SHIFTS = [1, 2, 3, 4, 5]
+
+export function parseICS(icsText) {
   const events = []
   const lines = icsText.split(/\r\n|\n|\r/)
-
   let currentEvent = null
 
   for (let i = 0; i < lines.length; i++) {
@@ -19,7 +17,6 @@ export function parseICS(icsText, selectedShifts) {
           start: currentEvent.start,
           end: currentEvent.end,
           allDay: true,
-          color: getShiftColor(currentEvent.title, selectedShifts)
         })
       }
       currentEvent = null
@@ -28,14 +25,10 @@ export function parseICS(icsText, selectedShifts) {
         currentEvent.title = line.substring(8)
       } else if (line.startsWith('DTSTART')) {
         const dateMatch = line.match(/[:;](\d{8})/)
-        if (dateMatch) {
-          currentEvent.start = formatICSDate(dateMatch[1])
-        }
+        if (dateMatch) currentEvent.start = formatICSDate(dateMatch[1])
       } else if (line.startsWith('DTEND')) {
         const dateMatch = line.match(/[:;](\d{8})/)
-        if (dateMatch) {
-          currentEvent.end = formatICSDate(dateMatch[1])
-        }
+        if (dateMatch) currentEvent.end = formatICSDate(dateMatch[1])
       }
     }
   }
@@ -43,49 +36,14 @@ export function parseICS(icsText, selectedShifts) {
   return events
 }
 
-/**
- * Format ICS date (YYYYMMDD) to ISO date string
- */
 function formatICSDate(icsDate) {
-  const year = icsDate.substring(0, 4)
-  const month = icsDate.substring(4, 6)
-  const day = icsDate.substring(6, 8)
-  return `${year}-${month}-${day}`
+  return `${icsDate.slice(0, 4)}-${icsDate.slice(4, 6)}-${icsDate.slice(6, 8)}`
 }
 
-/**
- * Get color for shift based on shift number
- */
-const SHIFT_COLORS = {
-  1: '#e74c3c',
-  2: '#3498db',
-  3: '#2ecc71',
-  4: '#f39c12',
-  5: '#9b59b6'
-}
-
-function getShiftColor(eventTitle, selectedShifts) {
-  // Extract shift number from title (e.g., "Shift 1", "Shift 3")
-  const match = eventTitle.match(/Shift (\d)/)
-  if (match) {
-    const shiftNum = parseInt(match[1])
-    return SHIFT_COLORS[shiftNum] || '#3788d8'
-  }
-  return '#3788d8'
-}
-
-/**
- * Get selected shifts from URL query parameters
- */
 export function getSelectedShiftsFromURL() {
   const params = new URLSearchParams(window.location.search)
   const shiftsParam = params.get('shifts')
-
-  if (!shiftsParam) {
-    return []
-  }
-
-  // Parse hyphen-separated shift numbers (e.g., "1-3-5")
+  if (!shiftsParam) return []
   return shiftsParam
     .split('-')
     .map(s => parseInt(s.trim()))
@@ -93,44 +51,21 @@ export function getSelectedShiftsFromURL() {
     .sort((a, b) => a - b)
 }
 
-/**
- * Get view from URL query parameters
- */
 export function getViewFromURL() {
   const params = new URLSearchParams(window.location.search)
-  const viewParam = params.get('view')
-
-  // Valid views: 'grid' or 'list'
-  if (viewParam === 'list') {
-    return 'listMonth'
-  }
-
-  // Default to grid view
-  return 'dayGridMonth'
+  return params.get('view') === 'list' ? 'listMonth' : 'dayGridMonth'
 }
 
-/**
- * Update URL with selected shifts and view (for shareable links)
- * In list view, shifts parameter is omitted since all shifts are visible
- */
 export function updateURL(selectedShifts, view) {
   const params = new URLSearchParams()
-
-  // Add view parameter
   if (view === 'listMonth') {
     params.set('view', 'list')
-    // Don't include shifts in list view
   } else {
     params.set('view', 'grid')
-    // Include shifts only in grid view
-    if (selectedShifts.length > 0) {
-      params.set('shifts', selectedShifts.join('-'))
-    }
+    if (selectedShifts.length > 0) params.set('shifts', selectedShifts.join('-'))
   }
-
   const newURL = params.toString()
     ? `${window.location.pathname}?${params.toString()}`
     : window.location.pathname
-
   window.history.replaceState({}, '', newURL)
 }

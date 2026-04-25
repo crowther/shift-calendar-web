@@ -7,13 +7,13 @@ function ViewSelector({ currentView, onViewChange }) {
         className={`view-button ${currentView === 'dayGridMonth' ? 'active' : ''}`}
         onClick={() => onViewChange('dayGridMonth')}
       >
-        📅 Grid
+        Grid
       </button>
       <button
         className={`view-button ${currentView === 'listMonth' ? 'active' : ''}`}
         onClick={() => onViewChange('listMonth')}
       >
-        📋 List
+        List
       </button>
     </div>
   )

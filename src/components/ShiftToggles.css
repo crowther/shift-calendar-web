@@ -1,75 +1,66 @@
 .shift-toggles {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
+/* Chip group — bordered button strip */
 .shift-buttons {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 0;
+  border: 2px solid var(--ink);
 }
 
 .shift-button {
-  padding: 10px 20px;
-  border: 2px solid var(--shift-color);
-  background: white;
-  color: var(--shift-color);
-  border-radius: 6px;
+  background: var(--paper);
+  border: none;
+  border-right: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 8px 16px;
+  font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+}
+.shift-button:last-child { border-right: none; }
+.shift-button:hover { background: var(--ink); color: var(--paper); }
+.shift-button:hover .shift-dot { border-color: var(--paper); background: var(--paper); }
+
+.shift-button.active { background: var(--ink); color: var(--paper); }
+.shift-button.active .shift-dot { background: var(--paper); }
+
+.shift-dot {
+  width: 10px; height: 10px;
+  display: inline-block;
+  border: 1.5px solid;
+  flex-shrink: 0;
 }
 
-.shift-button:hover {
-  background: var(--shift-color);
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.shift-button.active {
-  background: var(--shift-color);
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
+/* Action buttons */
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 0;
+  border: 2px solid var(--ink);
 }
-
 .action-button {
-  padding: 10px 16px;
-  border: 1px solid #ddd;
-  background: white;
-  color: #666;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background: var(--paper);
+  border: none;
+  border-right: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 8px 14px;
   font-size: 13px;
+  font-weight: 600;
+  transition: background 0.1s, color 0.1s;
 }
-
-.action-button:hover {
-  background: #f5f5f5;
-  border-color: #ccc;
-}
+.action-button:last-child { border-right: none; }
+.action-button:hover { background: var(--ink); color: var(--paper); }
 
 @media (max-width: 768px) {
-  .shift-toggles {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .shift-buttons,
-  .action-buttons {
-    width: 100%;
-  }
-
-  .shift-button,
-  .action-button {
-    flex: 1;
-  }
+  .shift-toggles { gap: 10px; }
+  .shift-button { padding: 7px 10px; font-size: 12px; }
+  .action-button { padding: 7px 10px; font-size: 12px; }
 }
