@@ -104,7 +104,7 @@ function App() {
       <div className="app-toolbar">
         {page === 'subscribe' ? (
           <button className="back-button" onClick={() => navigateTo(import.meta.env.BASE_URL)}>
-            ← Calendar
+            ↖ Calendar
           </button>
         ) : (
           <>
