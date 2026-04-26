@@ -29,3 +29,10 @@
   background: var(--ink);
   color: var(--paper);
 }
+
+@media (max-width: 768px) {
+  .view-button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}

@@ -43,6 +43,10 @@
 .fc-toolbar-chunk:last-child {
   flex: 1;
 }
+.fc-toolbar-chunk:last-child {
+  display: flex;
+  justify-content: flex-end;
+}
 .fc-toolbar-title {
   font-family: 'Public Sans', sans-serif !important;
   font-size: 22px !important;

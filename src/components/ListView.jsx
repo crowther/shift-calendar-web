@@ -79,7 +79,6 @@ function ListView({ events, currentDate, onMonthChange }) {
       <h2 className="toolbar-title">
         {MONTH_NAMES[month]} {year}
       </h2>
-      <div className="toolbar-spacer" />
     </div>
   )
 
