@@ -138,13 +138,19 @@
   color: var(--paper);
 }
 
-/* Sillitoe tartan fill on today row — shift columns only, 8px squares */
+/* Sillitoe tartan on today's shift columns */
 .shift-table tbody tr.today .today-cell {
   background-image: repeating-conic-gradient(
     color-mix(in srgb, var(--ink) 40%, transparent) 0% 25%,
     transparent 0% 50%
   );
   background-size: 16px 16px;
+}
+.today-cell.has-event .shift-type {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3px 8px;
+  display: inline-block;
 }
 
 /* Week-start separator (Monday) */
@@ -214,12 +220,7 @@
   line-height: 1.2;
   padding: 6px 4px;
 }
-.today-cell.has-event .shift-type {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 3px 8px;
-  display: inline-block;
-}
+
 .shift-cell:not(.has-event) {
   color: var(--inkSoft);
 }
