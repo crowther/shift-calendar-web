@@ -138,8 +138,8 @@
   color: var(--paper);
 }
 
-/* Sillitoe tartan on today's shift columns */
-.shift-table tbody tr.today .today-cell {
+/* Sillitoe tartan on today's occupied shift cells only */
+.shift-table tbody tr.today .today-cell.has-event {
   background-image: repeating-conic-gradient(
     color-mix(in srgb, var(--ink) 40%, transparent) 0% 25%,
     transparent 0% 50%
