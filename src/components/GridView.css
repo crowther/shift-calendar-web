@@ -167,8 +167,24 @@
   color: var(--ink) !important;
 }
 
+/* ── Event content ────────────────────────────────��──────────── */
+.fc-event-main {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  gap: 4px !important;
+}
+.event-code {
+  display: none;
+}
+
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .event-num, .event-type { display: none; }
+  .event-code { display: inline; }
+  .fc-event-main { justify-content: center !important; }
+
   .fc-daygrid-day {
     min-height: 72px;
   }

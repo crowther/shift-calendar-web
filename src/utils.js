@@ -17,18 +17,27 @@ export function parseICS(icsText) {
           start: currentEvent.start,
           end: currentEvent.end,
           allDay: true,
+          shiftNumber: currentEvent.shiftNumber,
+          shiftType: currentEvent.shiftType,
+          shiftCode: currentEvent.shiftCode,
         })
       }
       currentEvent = null
     } else if (currentEvent) {
       if (line.startsWith('SUMMARY:')) {
-        currentEvent.title = line.substring(8)
+        currentEvent.title = line.slice(8)
       } else if (line.startsWith('DTSTART')) {
         const dateMatch = line.match(/[:;](\d{8})/)
         if (dateMatch) currentEvent.start = formatICSDate(dateMatch[1])
       } else if (line.startsWith('DTEND')) {
         const dateMatch = line.match(/[:;](\d{8})/)
         if (dateMatch) currentEvent.end = formatICSDate(dateMatch[1])
+      } else if (line.startsWith('X-SHIFT-NUMBER:')) {
+        currentEvent.shiftNumber = parseInt(line.slice(15))
+      } else if (line.startsWith('X-SHIFT-TYPE:')) {
+        currentEvent.shiftType = line.slice(13)
+      } else if (line.startsWith('X-SHIFT-CODE:')) {
+        currentEvent.shiftCode = line.slice(13)
       }
     }
   }

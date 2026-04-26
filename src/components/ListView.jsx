@@ -41,10 +41,9 @@ function ListView({ events, currentDate, onMonthChange }) {
   const eventsByDate = useMemo(() => {
     const grouped = {}
     filteredEvents.forEach((e) => {
-      const match = e.title.match(/Shift (\d)/)
-      if (!match) return
+      if (!e.shiftNumber) return
       if (!grouped[e.start]) grouped[e.start] = {}
-      grouped[e.start][parseInt(match[1])] = e
+      grouped[e.start][e.shiftNumber] = e
     })
     return grouped
   }, [filteredEvents])
@@ -53,16 +52,6 @@ function ListView({ events, currentDate, onMonthChange }) {
 
   const today = new Date(todayStr)
   const isCurrentMonth = year === today.getFullYear() && month === today.getMonth()
-
-  const getShiftType = (event) => {
-    const match = event.title.match(/- (.+)$/)
-    return match
-      ? match[1]
-      : event.title
-          .replace(/Shift \d/, '')
-          .replace(/-/g, '')
-          .trim()
-  }
 
   const toolbar = (
     <div className="shift-table-toolbar">
@@ -156,7 +145,7 @@ function ListView({ events, currentDate, onMonthChange }) {
                           .join(' ')}
                       >
                         {event ? (
-                          <div className="shift-type">{getShiftType(event)}</div>
+                          <div className="shift-type">{event.shiftType}</div>
                         ) : (
                           <span className="shift-empty">–</span>
                         )}

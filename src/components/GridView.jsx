@@ -27,8 +27,18 @@ const GridView = forwardRef(function GridView({ events, currentDate, onMonthChan
       displayEventTime={false}
       eventColor="#0a1f44"
       eventClassNames={(info) => {
-        const match = info.event.title.match(/Shift (\d)/)
-        return match ? [`shift-event-${match[1]}`] : []
+        const n = info.event.extendedProps.shiftNumber
+        return n ? [`shift-event-${n}`] : []
+      }}
+      eventContent={(info) => {
+        const { shiftNumber, shiftType, shiftCode } = info.event.extendedProps
+        return (
+          <>
+            <span className="event-num">Shift {shiftNumber}</span>
+            <span className="event-type">{shiftType}</span>
+            <span className="event-code">{shiftCode}</span>
+          </>
+        )
       }}
       datesSet={(dateInfo) => {
         const d = dateInfo.view.currentStart
