@@ -22,7 +22,9 @@
   font-weight: 600;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  width: 92px;
   transition:
     background 0.1s,
     color 0.1s;
@@ -89,6 +91,7 @@
   .shift-button {
     padding: 7px 10px;
     font-size: 12px;
+    width: 78px;
   }
   .action-button {
     padding: 7px 10px;
