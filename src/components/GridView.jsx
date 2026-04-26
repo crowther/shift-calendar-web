@@ -1,4 +1,5 @@
 import { useRef, forwardRef, useImperativeHandle } from 'react'
+import './GridView.css'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 
