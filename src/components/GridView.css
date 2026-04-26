@@ -188,6 +188,7 @@
   .event-num, .event-type { display: none; }
   .event-code { display: inline; }
   .fc-event-main { justify-content: center !important; }
+  .fc-daygrid-event { overflow: visible !important; }
 
   .fc-daygrid-day {
     min-height: 72px;
