@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { parseICS, ALL_SHIFTS } from '../utils'
+import { parseICS, ALL_SHIFTS, buildCalendarPath } from '../utils'
+
+const EMPTY_EVENTS = []
 
 export function useCalendarData(selectedShifts, view) {
   const [events, setEvents] = useState([])
@@ -13,14 +15,7 @@ export function useCalendarData(selectedShifts, view) {
       const dateToStr = dateTo.toISOString().split('T')[0]
 
       const base = import.meta.env.BASE_URL
-      let url
-      if (shiftsToFetch.length === ALL_SHIFTS.length) {
-        url = `${base}calendars/all_shifts.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      } else if (shiftsToFetch.length === 1) {
-        url = `${base}calendars/shift${shiftsToFetch[0]}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      } else {
-        url = `${base}calendars/shift${shiftsToFetch.join(',')}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      }
+      const url = `${base}${buildCalendarPath(shiftsToFetch)}?date_from=${dateFromStr}&date_to=${dateToStr}`
 
       const response = await fetch(url)
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
@@ -36,15 +31,10 @@ export function useCalendarData(selectedShifts, view) {
         setEvents(parsedEvents)
       }
 
+      const prev = loadedRangeRef.current
       loadedRangeRef.current = {
-        from:
-          dateFrom < (loadedRangeRef.current.from || dateFrom)
-            ? dateFrom
-            : loadedRangeRef.current.from || dateFrom,
-        to:
-          dateTo > (loadedRangeRef.current.to || dateTo)
-            ? dateTo
-            : loadedRangeRef.current.to || dateTo,
+        from: !prev.from || dateFrom < prev.from ? dateFrom : prev.from,
+        to: !prev.to || dateTo > prev.to ? dateTo : prev.to,
       }
     } catch (err) {
       console.error('Error fetching calendar data:', err)
@@ -110,5 +100,5 @@ export function useCalendarData(selectedShifts, view) {
   )
 
   const noShiftsSelected = view !== 'listMonth' && selectedShifts.length === 0
-  return { events: noShiftsSelected ? [] : events, loading, error, ensureMonthLoaded }
+  return { events: noShiftsSelected ? EMPTY_EVENTS : events, loading, error, ensureMonthLoaded }
 }

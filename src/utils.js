@@ -1,5 +1,17 @@
 export const ALL_SHIFTS = [1, 2, 3, 4, 5]
 
+const getParams = () => new URLSearchParams(window.location.search)
+
+export function toggleShiftInList(list, n) {
+  return list.includes(n) ? list.filter((s) => s !== n) : [...list, n].sort((a, b) => a - b)
+}
+
+export function buildCalendarPath(shifts) {
+  if (shifts.length === ALL_SHIFTS.length) return 'calendars/all_shifts.ics'
+  if (shifts.length === 1) return `calendars/shift${shifts[0]}.ics`
+  return `calendars/shift${shifts.join(',')}.ics`
+}
+
 export function parseICS(icsText) {
   const events = []
   const lines = icsText.split(/\r\n|\n|\r/)
@@ -50,7 +62,7 @@ function formatICSDate(icsDate) {
 }
 
 export function getSelectedShiftsFromURL() {
-  const params = new URLSearchParams(window.location.search)
+  const params = getParams()
   const shiftsParam = params.get('shifts')
   if (!shiftsParam) return []
   return shiftsParam
@@ -61,7 +73,7 @@ export function getSelectedShiftsFromURL() {
 }
 
 export function getViewFromURL() {
-  const params = new URLSearchParams(window.location.search)
+  const params = getParams()
   const v = params.get('view')
   if (v === 'list') return 'listMonth'
   if (v === 'grid') return 'dayGridMonth'
@@ -69,7 +81,7 @@ export function getViewFromURL() {
 }
 
 export function getMonthFromURL() {
-  const params = new URLSearchParams(window.location.search)
+  const params = getParams()
   const m = params.get('month')
   if (!m) return null
   const [year, month] = m.split('-').map(Number)

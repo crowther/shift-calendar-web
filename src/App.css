@@ -38,12 +38,6 @@
   letter-spacing: -0.005em;
   margin: 0;
 }
-.app-banner-meta {
-  font-family: 'Public Sans', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  opacity: 0.85;
-}
 
 /* ── Toolbar ────────────────────────────────────────────────── */
 .app-toolbar {
@@ -109,8 +103,7 @@
 
 /* ── Calendar container ─────────────────────────────────────── */
 .app-calendar {
-  padding: 0 32px 32px;
-  padding-top: 24px;
+  padding: 24px 32px 32px;
 }
 
 /* ── Footer ─────────────────────────────────────────────────── */

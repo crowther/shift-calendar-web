@@ -2,24 +2,10 @@ import { useMemo } from 'react'
 import { ALL_SHIFTS } from '../utils'
 import './ListView.css'
 
-const MONTH_NAMES = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-const todayStr = new Date().toISOString().slice(0, 10)
+const DAY_FORMATTER = new Intl.DateTimeFormat('en-GB', { weekday: 'short' })
 
 function ListView({ events, currentDate, onMonthChange }) {
+  const todayStr = new Date().toISOString().slice(0, 10)
   const shiftMonth = (delta) => {
     const d = new Date(currentDate)
     d.setMonth(d.getMonth() + delta)
@@ -77,7 +63,7 @@ function ListView({ events, currentDate, onMonthChange }) {
         </button>
       </div>
       <h2 className="toolbar-title">
-        {MONTH_NAMES[month]} {year}
+        {currentDate.toLocaleDateString('en-GB', { month: 'long' })} {year}
       </h2>
     </div>
   )
@@ -87,7 +73,7 @@ function ListView({ events, currentDate, onMonthChange }) {
       <div className="shift-table-wrapper">
         {toolbar}
         <div className="shift-table-empty">
-          No events in {MONTH_NAMES[month]} {year}
+          No events in {currentDate.toLocaleDateString('en-GB', { month: 'long' })} {year}
         </div>
       </div>
     )
@@ -114,7 +100,7 @@ function ListView({ events, currentDate, onMonthChange }) {
               const isToday = dateStr === todayStr
               const isMonday = d.getDay() === 1
               const isFirstRow = dateStr === dates[0]
-              const dayName = d.toLocaleDateString('en-GB', { weekday: 'short' })
+              const dayName = DAY_FORMATTER.format(d)
               const dayNum = d.getDate()
 
               return (

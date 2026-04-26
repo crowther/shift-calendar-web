@@ -5,8 +5,10 @@ import {
   getMonthFromURL,
   updateURL,
   ALL_SHIFTS,
+  toggleShiftInList,
 } from './utils'
 import { useCalendarData } from './hooks/useCalendarData'
+import { useCopyToClipboard } from './hooks/useCopyToClipboard'
 import ShiftToggles from './components/ShiftToggles'
 import ViewSelector from './components/ViewSelector'
 import GridView from './components/GridView'
@@ -29,13 +31,13 @@ function App() {
   const [page, setPage] = useState(() =>
     window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar'
   )
-  const [copied, setCopied] = useState(false)
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
   const gridViewRef = useRef(null)
 
   const { events, loading, error, ensureMonthLoaded } = useCalendarData(selectedShifts, view)
+  const [copied, copyToClipboard] = useCopyToClipboard()
 
   useEffect(() => {
     if (page === 'subscribe') return
@@ -86,12 +88,7 @@ function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [page, navigateMonth])
 
-  const copyLink = useCallback(() => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }, [])
+  const copyLink = useCallback(() => copyToClipboard(window.location.href), [copyToClipboard])
 
   const handlePrint = useCallback(() => {
     const style = document.createElement('style')
@@ -104,10 +101,7 @@ function App() {
     document.head.removeChild(style)
   }, [view])
 
-  const toggleShift = (n) =>
-    setSelectedShifts((prev) =>
-      prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
-    )
+  const toggleShift = (n) => setSelectedShifts((prev) => toggleShiftInList(prev, n))
   const selectAll = () => setSelectedShifts(ALL_SHIFTS)
   const clearAll = () => setSelectedShifts([])
 

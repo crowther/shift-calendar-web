@@ -1,18 +1,13 @@
 import { useState } from 'react'
-import { ALL_SHIFTS } from '../utils'
+import { ALL_SHIFTS, toggleShiftInList, buildCalendarPath } from '../utils'
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
 import ShiftToggles from './ShiftToggles'
 import './SubscribePage.css'
 
 function CopyButton({ url }) {
-  const [copied, setCopied] = useState(false)
-  const copy = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
+  const [copied, copy] = useCopyToClipboard()
   return (
-    <button className="sub-copy-btn" onClick={copy}>
+    <button className="sub-copy-btn" onClick={() => copy(url)}>
       {copied ? 'Copied!' : 'Copy'}
     </button>
   )
@@ -32,19 +27,10 @@ function SubscribePage() {
   const [selectedShifts, setSelectedShifts] = useState([...ALL_SHIFTS])
   const base = window.location.origin + import.meta.env.BASE_URL.slice(0, -1)
 
-  const toggleShift = (n) =>
-    setSelectedShifts((prev) =>
-      prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
-    )
+  const toggleShift = (n) => setSelectedShifts((prev) => toggleShiftInList(prev, n))
 
   const customUrl =
-    selectedShifts.length === 0
-      ? null
-      : selectedShifts.length === ALL_SHIFTS.length
-        ? `${base}/calendars/all_shifts.ics`
-        : selectedShifts.length === 1
-          ? `${base}/calendars/shift${selectedShifts[0]}.ics`
-          : `${base}/calendars/shift${selectedShifts.join(',')}.ics`
+    selectedShifts.length === 0 ? null : `${base}/${buildCalendarPath(selectedShifts)}`
 
   return (
     <div className="subscribe-page">
@@ -55,12 +41,12 @@ function SubscribePage() {
       <div className="sub-section">
         <div className="sub-section-header">Shift calendars</div>
         <div className="sub-table">
-          <UrlRow label="All shifts" url={`${base}/calendars/all_shifts.ics`} />
+          <UrlRow label="All shifts" url={`${base}/${buildCalendarPath(ALL_SHIFTS)}`} />
           {ALL_SHIFTS.map((n) => (
             <UrlRow
               key={n}
               label={`Shift ${n}`}
-              url={`${base}/calendars/shift${n}.ics`}
+              url={`${base}/${buildCalendarPath([n])}`}
               className={`sub-shift-${n}`}
             />
           ))}

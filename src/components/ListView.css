@@ -114,7 +114,6 @@
 .shift-table th.shift-column {
   min-width: 100px;
 }
-/* Highlight "my" column — not applicable in multi-shift view, keep uniform */
 
 /* Body rows */
 .shift-table tbody tr {

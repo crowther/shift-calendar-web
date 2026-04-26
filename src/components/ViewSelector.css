@@ -21,10 +21,7 @@
 .view-button:last-child {
   border-right: none;
 }
-.view-button:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
+.view-button:hover,
 .view-button.active {
   background: var(--ink);
   color: var(--paper);

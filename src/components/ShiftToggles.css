@@ -34,10 +34,7 @@
 .shift-button:last-child {
   border-right: none;
 }
-.shift-button:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
+.shift-button:hover,
 .shift-button.active {
   background: var(--ink);
   color: var(--paper);
