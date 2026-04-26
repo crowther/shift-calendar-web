@@ -29,6 +29,7 @@ function App() {
   const [page, setPage] = useState(() =>
     window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar'
   )
+  const [copied, setCopied] = useState(false)
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
@@ -84,6 +85,13 @@ function App() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [page, navigateMonth])
+
+  const copyLink = useCallback(() => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }, [])
 
   const toggleShift = (n) =>
     setSelectedShifts((prev) =>
@@ -142,7 +150,12 @@ function App() {
       </div>
       <footer className="app-foot">
         <span className="app-foot-share">
-          Share: <code>{window.location.href}</code>
+          <span className="app-foot-url" onClick={copyLink} title="Click to copy">
+            Share: <code>{copied ? 'Copied!' : window.location.href}</code>
+          </span>
+          <button className="copy-link-button app-foot-copy" onClick={copyLink}>
+            {copied ? 'Copied!' : 'Copy link'}
+          </button>
         </span>
         <span className="app-foot-build">{formatBuildInfo()}</span>
         <span className="app-foot-right">

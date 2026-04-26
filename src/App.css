@@ -61,7 +61,8 @@
 
 /* ── Subscribe / back nav ───────────────────────────────────── */
 .back-button,
-.subscribe-link {
+.subscribe-link,
+.copy-link-button {
   background: var(--paper);
   border: 2px solid var(--ink);
   color: var(--ink);
@@ -75,7 +76,8 @@
     color 0.1s;
 }
 .back-button:hover,
-.subscribe-link:hover {
+.subscribe-link:hover,
+.copy-link-button:hover {
   background: var(--ink);
   color: var(--paper);
 }
@@ -123,6 +125,34 @@
 }
 .app-foot-share {
   flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.app-foot-copy {
+  display: none;
+}
+.app-foot code {
+  font-family: 'Public Sans', sans-serif;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+  color: var(--ink);
+  font-size: 11px;
+}
+.app-foot-url {
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.app-foot-url code {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .app-foot-build {
   flex: 1;
@@ -136,14 +166,6 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
-}
-.app-foot code {
-  font-family: 'Public Sans', sans-serif;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  padding: 2px 6px;
-  color: var(--ink);
-  font-size: 11px;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
@@ -172,5 +194,11 @@
   .app-foot-right {
     flex: unset;
     text-align: left;
+  }
+  .app-foot-url {
+    display: none;
+  }
+  .app-foot-copy {
+    display: inline-flex;
   }
 }

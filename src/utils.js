@@ -53,7 +53,10 @@ export function getSelectedShiftsFromURL() {
 
 export function getViewFromURL() {
   const params = new URLSearchParams(window.location.search)
-  return params.get('view') === 'list' ? 'listMonth' : 'dayGridMonth'
+  const v = params.get('view')
+  if (v === 'list') return 'listMonth'
+  if (v === 'grid') return 'dayGridMonth'
+  return window.innerWidth < 600 ? 'listMonth' : 'dayGridMonth'
 }
 
 export function getMonthFromURL() {
