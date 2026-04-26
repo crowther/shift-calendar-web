@@ -28,15 +28,15 @@ function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
-  const navigateTo = (path) => {
+  const navigateTo = useCallback((path) => {
     window.history.pushState({}, '', path)
     setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
-  }
+  }, [])
 
-  const handleMonthChange = (newDate) => {
+  const handleMonthChange = useCallback((newDate) => {
     setCurrentDate(newDate)
     ensureMonthLoaded(newDate.getFullYear(), newDate.getMonth())
-  }
+  }, [ensureMonthLoaded])
 
   const navigateMonth = useCallback((delta) => {
     if (view === 'listMonth') {
@@ -46,7 +46,7 @@ function App() {
     } else {
       gridViewRef.current?.navigate(delta)
     }
-  }, [view, currentDate])
+  }, [view, currentDate, handleMonthChange])
 
   useEffect(() => {
     const onKey = (e) => {
