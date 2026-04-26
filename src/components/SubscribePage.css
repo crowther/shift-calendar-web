@@ -133,45 +133,11 @@
   color: var(--paper);
 }
 
-/* ── Custom combination checkboxes ──────────────── */
-.sub-checkboxes-row {
+/* ── Custom combination toggles ──────────────────── */
+.sub-toggles-row {
   padding: 12px 16px;
-  gap: 24px;
-  flex-wrap: wrap;
   background: var(--paperAlt);
-}
-
-.sub-check {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-}
-
-.sub-check input[type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: var(--ink);
-}
-
-.sub-check-1 {
-  color: color-mix(in srgb, var(--s1) 60%, #000);
-}
-.sub-check-2 {
-  color: color-mix(in srgb, var(--s2) 60%, #000);
-}
-.sub-check-3 {
-  color: color-mix(in srgb, var(--s3) 60%, #000);
-}
-.sub-check-4 {
-  color: color-mix(in srgb, var(--s4) 60%, #000);
-}
-.sub-check-5 {
-  color: color-mix(in srgb, var(--s5) 60%, #000);
+  border-bottom: 1px solid var(--rule);
 }
 
 .sub-empty {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ALL_SHIFTS } from '../utils'
+import ShiftToggles from './ShiftToggles'
 import './SubscribePage.css'
 
 function CopyButton({ url }) {
@@ -71,17 +72,12 @@ function SubscribePage() {
       <div className="sub-section">
         <div className="sub-section-header">Custom combination</div>
         <div className="sub-table">
-          <div className="sub-row sub-checkboxes-row">
-            {ALL_SHIFTS.map((n) => (
-              <label key={n} className={`sub-check sub-check-${n}`}>
-                <input
-                  type="checkbox"
-                  checked={selectedShifts.includes(n)}
-                  onChange={() => toggleShift(n)}
-                />
-                Shift {n}
-              </label>
-            ))}
+          <div className="sub-toggles-row">
+            <ShiftToggles
+              selectedShifts={selectedShifts}
+              onToggle={toggleShift}
+              onSelectAll={() => setSelectedShifts([...ALL_SHIFTS])}
+            />
           </div>
           {customUrl ? (
             <UrlRow label="Your URL" url={customUrl} />

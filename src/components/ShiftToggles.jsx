@@ -26,9 +26,11 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
         <button className="action-button" onClick={onSelectAll}>
           All
         </button>
-        <button className="action-button" onClick={onClearAll}>
-          None
-        </button>
+        {onClearAll && (
+          <button className="action-button" onClick={onClearAll}>
+            None
+          </button>
+        )}
       </div>
     </div>
   )
