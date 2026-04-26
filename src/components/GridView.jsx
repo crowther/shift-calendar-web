@@ -33,11 +33,11 @@ const GridView = forwardRef(function GridView({ events, currentDate, onMonthChan
       eventContent={(info) => {
         const { shiftNumber, shiftType, shiftCode } = info.event.extendedProps
         return (
-          <>
+          <div className="event-inner">
             <span className="event-num">Shift {shiftNumber}</span>
             <span className="event-type">{shiftType}</span>
             <span className="event-code">{shiftCode}</span>
-          </>
+          </div>
         )
       }}
       datesSet={(dateInfo) => {
