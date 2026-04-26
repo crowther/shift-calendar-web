@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, updateURL, ALL_SHIFTS } from './utils'
 import { useCalendarData } from './hooks/useCalendarData'
 import ShiftToggles from './components/ShiftToggles'
@@ -14,7 +14,6 @@ function App() {
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
   const gridViewRef = useRef(null)
-  const navigateMonthRef = useRef(null)
 
   const { events, loading, error, ensureMonthLoaded } = useCalendarData(selectedShifts, view)
 
@@ -29,17 +28,6 @@ function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (page === 'subscribe') return
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
-      if (e.key === 'ArrowLeft') navigateMonthRef.current?.(-1)
-      else if (e.key === 'ArrowRight') navigateMonthRef.current?.(1)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [page])
-
   const navigateTo = (path) => {
     window.history.pushState({}, '', path)
     setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
@@ -50,7 +38,7 @@ function App() {
     ensureMonthLoaded(newDate.getFullYear(), newDate.getMonth())
   }
 
-  navigateMonthRef.current = (delta) => {
+  const navigateMonth = useCallback((delta) => {
     if (view === 'listMonth') {
       const d = new Date(currentDate)
       d.setMonth(d.getMonth() + delta)
@@ -58,7 +46,18 @@ function App() {
     } else {
       gridViewRef.current?.navigate(delta)
     }
-  }
+  }, [view, currentDate])
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (page === 'subscribe') return
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+      if (e.key === 'ArrowLeft') navigateMonth(-1)
+      else if (e.key === 'ArrowRight') navigateMonth(1)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [page, navigateMonth])
 
   const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a, b) => a - b))
   const selectAll   = () => setSelectedShifts(ALL_SHIFTS)
