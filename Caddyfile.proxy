@@ -1,17 +1,18 @@
-# Main reverse proxy configuration
-# Replace 'localhost' with your domain for production
+{$DOMAIN} {
+    # Redirect root and bare sub-path to the app
+    redir / /shift-calendar/ permanent
+    redir /shift-calendar /shift-calendar/ permanent
 
-localhost {
-    # Proxy all requests to the web frontend
-    reverse_proxy web:80
+    # Strip /shift-calendar prefix and forward to web container
+    handle_path /shift-calendar/* {
+        reverse_proxy web:80
+    }
 
-    # Logging
     log {
         output file /data/access.log
         format console
     }
 
-    # Security headers
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
         X-Frame-Options "SAMEORIGIN"
@@ -20,25 +21,5 @@ localhost {
         -Server
     }
 
-    # Compression
     encode gzip zstd
 }
-
-# For production, replace localhost with your domain:
-# your-domain.com {
-#     reverse_proxy web:80
-#
-#     log {
-#         output file /data/access.log
-#     }
-#
-#     header {
-#         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-#         X-Frame-Options "SAMEORIGIN"
-#         X-Content-Type-Options "nosniff"
-#         X-XSS-Protection "1; mode=block"
-#         -Server
-#     }
-#
-#     encode gzip zstd
-# }

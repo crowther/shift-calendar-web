@@ -35,6 +35,8 @@ services:
       - ./Caddyfile.proxy:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
+    environment:
+      - DOMAIN=${DOMAIN}
     networks:
       - app-network
     depends_on:

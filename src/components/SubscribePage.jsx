@@ -30,7 +30,7 @@ function UrlRow({ label, url, className }) {
 
 function SubscribePage() {
   const [selectedShifts, setSelectedShifts] = useState([...ALL_SHIFTS])
-  const base = window.location.origin
+  const base = window.location.origin + import.meta.env.BASE_URL.slice(0, -1)
 
   const toggleShift = (n) =>
     setSelectedShifts((prev) =>

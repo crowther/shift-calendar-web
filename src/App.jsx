@@ -14,9 +14,11 @@ import ListView from './components/ListView'
 import SubscribePage from './components/SubscribePage'
 import './App.css'
 
+const SUBSCRIBE_PATH = `${import.meta.env.BASE_URL}subscribe`
+
 function App() {
   const [page, setPage] = useState(() =>
-    window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar'
+    window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar'
   )
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
@@ -32,14 +34,14 @@ function App() {
 
   useEffect(() => {
     const onPop = () =>
-      setPage(window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
+      setPage(window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar')
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   const navigateTo = useCallback((path) => {
     window.history.pushState({}, '', path)
-    setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
+    setPage(path === SUBSCRIBE_PATH ? 'subscribe' : 'calendar')
   }, [])
 
   const handleMonthChange = useCallback(
@@ -92,7 +94,7 @@ function App() {
       </header>
       <div className="app-toolbar">
         {page === 'subscribe' ? (
-          <button className="back-button" onClick={() => navigateTo('/')}>
+          <button className="back-button" onClick={() => navigateTo(import.meta.env.BASE_URL)}>
             ← Calendar
           </button>
         ) : (
@@ -134,7 +136,7 @@ function App() {
           Share: <code>{window.location.href}</code>
         </span>
         {page !== 'subscribe' && (
-          <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>
+          <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
             Subscribe to iCal ↗
           </button>
         )}

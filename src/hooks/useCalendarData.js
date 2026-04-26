@@ -12,13 +12,14 @@ export function useCalendarData(selectedShifts, view) {
       const dateFromStr = dateFrom.toISOString().split('T')[0]
       const dateToStr = dateTo.toISOString().split('T')[0]
 
+      const base = import.meta.env.BASE_URL
       let url
       if (shiftsToFetch.length === ALL_SHIFTS.length) {
-        url = `/calendars/all_shifts.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
+        url = `${base}calendars/all_shifts.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
       } else if (shiftsToFetch.length === 1) {
-        url = `/calendars/shift${shiftsToFetch[0]}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
+        url = `${base}calendars/shift${shiftsToFetch[0]}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
       } else {
-        url = `/calendars/shift${shiftsToFetch.join(',')}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
+        url = `${base}calendars/shift${shiftsToFetch.join(',')}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
       }
 
       const response = await fetch(url)
