@@ -9,6 +9,7 @@ services:
     environment:
       - TEMPLATE_FILE=/generator/template.csv
       - GENERATOR_PATH=/generator
+      - PYTHONPATH=/generator
     networks:
       - app-network
     restart: unless-stopped
