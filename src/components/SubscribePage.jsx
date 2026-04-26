@@ -22,7 +22,7 @@ function UrlRow({ label, url, className }) {
   return (
     <div className={['sub-row', className].filter(Boolean).join(' ')}>
       <span className="sub-label">{label}</span>
-      <code className="sub-url">{url}</code>
+      <span className="sub-url"><code>{url}</code></span>
       <CopyButton url={url} />
     </div>
   )

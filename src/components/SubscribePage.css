@@ -54,12 +54,17 @@
 
 .sub-url {
   flex: 1;
+  padding: 10px 16px;
+  border-right: 1px solid var(--rule);
+}
+.sub-url code {
   font-family: 'Public Sans', sans-serif;
   font-size: 12px;
-  color: var(--inkSoft);
-  padding: 10px 16px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
   word-break: break-all;
-  border-right: 1px solid var(--rule);
 }
 
 /* ── Shift colour rows ───────────────────────────── */
@@ -92,7 +97,6 @@
 .sub-shift-3 .sub-url,
 .sub-shift-4 .sub-url,
 .sub-shift-5 .sub-url {
-  color: var(--ink);
   border-right-color: rgba(0, 0, 0, 0.12);
 }
 
