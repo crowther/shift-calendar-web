@@ -200,12 +200,13 @@
 /* ── Print ──────────────────────────────────────────────────── */
 @media print {
   .fc-toolbar-chunk:first-child,
-  .fc-toolbar-chunk:last-child {
+  .fc-toolbar-chunk:nth-child(2) {
     display: none;
   }
-  .fc-toolbar-chunk:nth-child(2) {
+  .fc-toolbar-chunk:last-child {
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
-    text-align: center;
   }
   .fc,
   .fc .fc-scrollgrid,
