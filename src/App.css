@@ -121,14 +121,21 @@
   gap: 16px;
   flex-wrap: wrap;
 }
-.app-foot .subscribe-link {
-  margin-left: auto;
+.app-foot-share {
+  flex: 1;
 }
 .app-foot-build {
+  flex: 1;
+  text-align: center;
   font-family: 'Public Sans', sans-serif;
   font-size: 11px;
   letter-spacing: 0.04em;
   opacity: 0.5;
+}
+.app-foot-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 .app-foot code {
   font-family: 'Public Sans', sans-serif;
@@ -159,5 +166,11 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+  }
+  .app-foot-share,
+  .app-foot-build,
+  .app-foot-right {
+    flex: unset;
+    text-align: left;
   }
 }

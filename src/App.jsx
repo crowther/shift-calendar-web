@@ -141,15 +141,17 @@ function App() {
         )}
       </div>
       <footer className="app-foot">
-        <span>
+        <span className="app-foot-share">
           Share: <code>{window.location.href}</code>
         </span>
         <span className="app-foot-build">{formatBuildInfo()}</span>
-        {page !== 'subscribe' && (
-          <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
-            Subscribe to iCal ↗
-          </button>
-        )}
+        <span className="app-foot-right">
+          {page !== 'subscribe' && (
+            <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
+              Subscribe to iCal ↗
+            </button>
+          )}
+        </span>
       </footer>
     </div>
   )
