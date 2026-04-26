@@ -6,9 +6,11 @@ import { parseICS, getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, up
 import ShiftToggles from './components/ShiftToggles'
 import ViewSelector from './components/ViewSelector'
 import ShiftTableView from './components/ShiftTableView'
+import SubscribePage from './components/SubscribePage'
 import './App.css'
 
 function App() {
+  const [page, setPage] = useState(() => window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
@@ -20,8 +22,20 @@ function App() {
   const navigateMonthRef = useRef(null)
 
   useEffect(() => {
+    if (page === 'subscribe') return
     updateURL(selectedShifts, view, currentDate)
-  }, [selectedShifts, view, currentDate])
+  }, [page, selectedShifts, view, currentDate])
+
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path)
+    setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
+  }
+
+  useEffect(() => {
+    const onPop = () => setPage(window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   const fetchDataForRange = async (dateFrom, dateTo, shiftsToFetch, append = false) => {
     try {
@@ -125,13 +139,14 @@ function App() {
 
   useEffect(() => {
     const onKey = (e) => {
+      if (page === 'subscribe') return
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
       if (e.key === 'ArrowLeft') navigateMonthRef.current(-1)
       else if (e.key === 'ArrowRight') navigateMonthRef.current(1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [])
+  }, [page])
 
   const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a,b)=>a-b))
   const selectAll   = () => setSelectedShifts(ALL_SHIFTS)
@@ -147,20 +162,30 @@ function App() {
         </div>
       </header>
       <div className="app-toolbar">
-        {view !== 'listMonth' && (
-          <ShiftToggles
-            selectedShifts={selectedShifts}
-            onToggle={toggleShift}
-            onSelectAll={selectAll}
-            onClearAll={clearAll}
-          />
+        {page === 'subscribe' ? (
+          <button className="back-button" onClick={() => navigateTo('/')}>
+            ← Calendar
+          </button>
+        ) : (
+          <>
+            {view !== 'listMonth' && (
+              <ShiftToggles
+                selectedShifts={selectedShifts}
+                onToggle={toggleShift}
+                onSelectAll={selectAll}
+                onClearAll={clearAll}
+              />
+            )}
+            <ViewSelector currentView={view} onViewChange={setView} />
+          </>
         )}
-        <ViewSelector currentView={view} onViewChange={setView} />
       </div>
-      {error && <div className="app-error">Error loading calendar data: {error}</div>}
-      {loading && <div className="app-loading">Loading…</div>}
+      {page === 'calendar' && error && <div className="app-error">Error loading calendar data: {error}</div>}
+      {page === 'calendar' && loading && <div className="app-loading">Loading…</div>}
       <div className="app-calendar">
-        {view === 'listMonth' ? (
+        {page === 'subscribe' ? (
+          <SubscribePage />
+        ) : view === 'listMonth' ? (
           <ShiftTableView events={events} currentDate={currentDate} onMonthChange={handleMonthChange} />
         ) : selectedShifts.length === 0 ? (
           <div className="app-empty">Select one or more shifts above to view the calendar</div>
@@ -191,7 +216,10 @@ function App() {
       </div>
       <footer className="app-foot">
         <span>Share: <code>{window.location.href}</code></span>
-        <span>Subscribe via <code>/calendars/shift{'{n}'}.ics</code></span>
+        {page === 'subscribe'
+          ? null
+          : <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>Subscribe to iCal ↗</button>
+        }
       </footer>
     </div>
   )

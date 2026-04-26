@@ -44,6 +44,22 @@
   flex-wrap: wrap;
 }
 
+/* ── Subscribe / back nav ───────────────────────────────────── */
+.back-button,
+.subscribe-link {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+.back-button:hover,
+.subscribe-link:hover { background: var(--ink); color: var(--paper); }
+
 /* ── Status / feedback ──────────────────────────────────────── */
 .app-error {
   background: #fff0f0;

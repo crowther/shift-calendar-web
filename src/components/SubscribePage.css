@@ -1,0 +1,165 @@
+.subscribe-page {
+  width: 100%;
+}
+
+.subscribe-intro {
+  color: var(--inkSoft);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* ── Section ─────────────────────────────────────── */
+.sub-section {
+  margin-bottom: 32px;
+}
+
+.sub-section-header {
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border: 2px solid var(--ink);
+}
+
+/* ── Table ───────────────────────────────────────── */
+.sub-table {
+  border: 2px solid var(--ink);
+  border-top: none;
+}
+
+.sub-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  min-height: 48px;
+}
+.sub-row:last-child { border-bottom: none; }
+
+.sub-label {
+  width: 130px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-right: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.sub-url {
+  flex: 1;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 12px;
+  color: var(--inkSoft);
+  padding: 10px 16px;
+  word-break: break-all;
+  border-right: 1px solid var(--rule);
+}
+
+/* ── Shift colour rows ───────────────────────────── */
+.sub-shift-1 { background-color: var(--s1); }
+.sub-shift-2 { background-color: var(--s2); }
+.sub-shift-3 { background-color: var(--s3); }
+.sub-shift-4 { background-color: var(--s4); }
+.sub-shift-5 { background-color: var(--s5); }
+
+.sub-shift-1 .sub-label,
+.sub-shift-2 .sub-label,
+.sub-shift-3 .sub-label,
+.sub-shift-4 .sub-label,
+.sub-shift-5 .sub-label { border-right-color: rgba(0,0,0,0.12); }
+
+.sub-shift-1 .sub-url,
+.sub-shift-2 .sub-url,
+.sub-shift-3 .sub-url,
+.sub-shift-4 .sub-url,
+.sub-shift-5 .sub-url { color: var(--ink); border-right-color: rgba(0,0,0,0.12); }
+
+/* ── Copy button ─────────────────────────────────── */
+.sub-copy-btn {
+  background: var(--paper);
+  border: none;
+  border-left: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.1s, color 0.1s;
+  flex-shrink: 0;
+}
+.sub-copy-btn:hover { background: var(--ink); color: var(--paper); }
+.sub-shift-1 .sub-copy-btn,
+.sub-shift-2 .sub-copy-btn,
+.sub-shift-3 .sub-copy-btn,
+.sub-shift-4 .sub-copy-btn,
+.sub-shift-5 .sub-copy-btn { background: transparent; }
+.sub-shift-1 .sub-copy-btn:hover,
+.sub-shift-2 .sub-copy-btn:hover,
+.sub-shift-3 .sub-copy-btn:hover,
+.sub-shift-4 .sub-copy-btn:hover,
+.sub-shift-5 .sub-copy-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ── Custom combination checkboxes ──────────────── */
+.sub-checkboxes-row {
+  padding: 12px 16px;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: var(--paperAlt);
+}
+
+.sub-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sub-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--ink);
+}
+
+.sub-check-1 { color: color-mix(in srgb, var(--s1) 60%, #000); }
+.sub-check-2 { color: color-mix(in srgb, var(--s2) 60%, #000); }
+.sub-check-3 { color: color-mix(in srgb, var(--s3) 60%, #000); }
+.sub-check-4 { color: color-mix(in srgb, var(--s4) 60%, #000); }
+.sub-check-5 { color: color-mix(in srgb, var(--s5) 60%, #000); }
+
+.sub-empty {
+  padding: 12px 16px;
+  color: var(--inkSoft);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ── Instructions ────────────────────────────────── */
+.sub-instructions .sub-label {
+  font-weight: 700;
+}
+
+.sub-instruction {
+  flex: 1;
+  font-size: 13px;
+  color: var(--inkSoft);
+  padding: 10px 16px;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .sub-label { width: 110px; font-size: 12px; padding: 8px 10px; }
+  .sub-url   { font-size: 11px; padding: 8px 10px; }
+  .sub-copy-btn { padding: 8px 10px; font-size: 12px; }
+  .sub-checkboxes-row { gap: 14px; }
+}
