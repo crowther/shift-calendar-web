@@ -39,10 +39,10 @@
   padding: 14px 32px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
 }
+.app-toolbar .view-selector { margin-left: auto; }
 
 /* ── Subscribe / back nav ───────────────────────────────────── */
 .back-button,
