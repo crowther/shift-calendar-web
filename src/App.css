@@ -124,6 +124,12 @@
 .app-foot .subscribe-link {
   margin-left: auto;
 }
+.app-foot-build {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+}
 .app-foot code {
   font-family: 'Public Sans', sans-serif;
   background: var(--paper);

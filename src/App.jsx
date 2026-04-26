@@ -16,6 +16,15 @@ import './App.css'
 
 const SUBSCRIBE_PATH = `${import.meta.env.BASE_URL}subscribe`
 
+function formatBuildInfo() {
+  const raw = import.meta.env.VITE_BUILD_DATE
+  if (!raw || raw === 'local') return `v${__APP_VERSION__}`
+  const d = new Date(raw)
+  const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  return `v${__APP_VERSION__} · Built: ${date} ${time}`
+}
+
 function App() {
   const [page, setPage] = useState(() =>
     window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar'
@@ -135,6 +144,7 @@ function App() {
         <span>
           Share: <code>{window.location.href}</code>
         </span>
+        <span className="app-foot-build">{formatBuildInfo()}</span>
         {page !== 'subscribe' && (
           <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
             Subscribe to iCal ↗

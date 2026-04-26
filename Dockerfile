@@ -12,6 +12,10 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Build date injected by CI; defaults to 'local' for local builds
+ARG BUILD_DATE=local
+ENV VITE_BUILD_DATE=$BUILD_DATE
+
 # Lint and build
 RUN npm run lint && npm run build
 

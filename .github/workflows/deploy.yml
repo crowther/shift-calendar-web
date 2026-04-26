@@ -29,6 +29,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.IMAGE }}:latest
           cache-to: type=inline
+          build-args: BUILD_DATE=${{ github.event.head_commit.timestamp }}
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}
