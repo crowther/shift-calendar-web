@@ -1,18 +1,11 @@
+import { ALL_SHIFTS } from '../utils'
 import './ShiftToggles.css'
-
-const SHIFT_COLORS = {
-  1: '#d4351c',
-  2: '#00703c',
-  3: '#1d70b8',
-  4: '#b58840',
-  5: '#4c2c92',
-}
 
 function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
   return (
     <div className="shift-toggles">
       <div className="shift-buttons">
-        {[1, 2, 3, 4, 5].map((shift) => (
+        {ALL_SHIFTS.map((shift) => (
           <button
             key={shift}
             className={`shift-button ${selectedShifts.includes(shift) ? 'active' : ''}`}
@@ -21,8 +14,8 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
             <span
               className="shift-dot"
               style={{
-                borderColor: SHIFT_COLORS[shift],
-                background: selectedShifts.includes(shift) ? SHIFT_COLORS[shift] : 'transparent',
+                borderColor: `var(--s${shift})`,
+                background: selectedShifts.includes(shift) ? `var(--s${shift})` : 'transparent',
               }}
             />
             Shift {shift}
