@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Navy blue background -->
+  <rect width="32" height="32" rx="5" fill="#0a1f44"/>
+
+  <!-- Calendar body (white) -->
+  <rect x="5" y="9" width="22" height="19" rx="2.5" fill="#ffffff"/>
+
+  <!-- Calendar header bar (blue) -->
+  <rect x="5" y="9" width="22" height="7" rx="2.5" fill="#3a6fbe"/>
+  <!-- Fix bottom corners of header -->
+  <rect x="5" y="13" width="22" height="3" fill="#3a6fbe"/>
+
+  <!-- Binding pegs (gold) -->
+  <rect x="10" y="6.5" width="3" height="6" rx="1.5" fill="#f5c518"/>
+  <rect x="19" y="6.5" width="3" height="6" rx="1.5" fill="#f5c518"/>
+
+  <!-- Calendar grid dots/cells -->
+  <!-- Row 1 -->
+  <rect x="7"  y="18" width="4" height="3.5" rx="0.5" fill="#dde8f5"/>
+  <rect x="13" y="18" width="4" height="3.5" rx="0.5" fill="#dde8f5"/>
+  <rect x="19" y="18" width="4" height="3.5" rx="0.5" fill="#dde8f5"/>
+  <!-- Row 2 -->
+  <rect x="7"  y="22.5" width="4" height="3.5" rx="0.5" fill="#dde8f5"/>
+  <!-- Highlighted "today" cell in gold -->
+  <rect x="13" y="22.5" width="4" height="3.5" rx="0.5" fill="#f5c518"/>
+  <rect x="19" y="22.5" width="4" height="3.5" rx="0.5" fill="#dde8f5"/>
+</svg>
