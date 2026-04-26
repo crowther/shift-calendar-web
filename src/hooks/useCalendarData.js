@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { parseICS, ALL_SHIFTS } from '../utils'
 
 export function useCalendarData(selectedShifts, view) {
@@ -7,7 +7,7 @@ export function useCalendarData(selectedShifts, view) {
   const [error, setError] = useState(null)
   const loadedRangeRef = useRef({ from: null, to: null })
 
-  const fetchDataForRange = async (dateFrom, dateTo, shiftsToFetch, append = false) => {
+  const fetchDataForRange = useCallback(async (dateFrom, dateTo, shiftsToFetch, append = false) => {
     try {
       const dateFromStr = dateFrom.toISOString().split('T')[0]
       const dateToStr   = dateTo.toISOString().split('T')[0]
@@ -44,12 +44,11 @@ export function useCalendarData(selectedShifts, view) {
       setError(err.message)
       throw err
     }
-  }
+  }, [])
 
   useEffect(() => {
     const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
     if (shiftsToFetch.length === 0) {
-      setEvents([])
       loadedRangeRef.current = { from: null, to: null }
       return
     }
@@ -62,16 +61,16 @@ export function useCalendarData(selectedShifts, view) {
       shiftsToFetch,
       false
     ).finally(() => setLoading(false))
-  }, [selectedShifts, view])
+  }, [selectedShifts, view, fetchDataForRange])
 
-  const isMonthLoaded = (year, month) => {
+  const isMonthLoaded = useCallback((year, month) => {
     if (!loadedRangeRef.current.from || !loadedRangeRef.current.to) return false
     const monthStart = new Date(year, month, 1)
     const monthEnd   = new Date(year, month + 1, 0)
     return monthStart >= loadedRangeRef.current.from && monthEnd <= loadedRangeRef.current.to
-  }
+  }, [])
 
-  const ensureMonthLoaded = async (year, month) => {
+  const ensureMonthLoaded = useCallback(async (year, month) => {
     if (isMonthLoaded(year, month)) return
     const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
     if (shiftsToFetch.length === 0) return
@@ -88,7 +87,8 @@ export function useCalendarData(selectedShifts, view) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [view, selectedShifts, fetchDataForRange, isMonthLoaded])
 
-  return { events, loading, error, ensureMonthLoaded }
+  const noShiftsSelected = view !== 'listMonth' && selectedShifts.length === 0
+  return { events: noShiftsSelected ? [] : events, loading, error, ensureMonthLoaded }
 }
