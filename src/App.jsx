@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import listPlugin from '@fullcalendar/list'
-import { parseICS, getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, updateURL, ALL_SHIFTS } from './utils'
+import { getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, updateURL, ALL_SHIFTS } from './utils'
+import { useCalendarData } from './hooks/useCalendarData'
 import ShiftToggles from './components/ShiftToggles'
 import ViewSelector from './components/ViewSelector'
-import ShiftTableView from './components/ShiftTableView'
+import GridView from './components/GridView'
+import ListView from './components/ListView'
 import SubscribePage from './components/SubscribePage'
 import './App.css'
 
@@ -14,22 +13,15 @@ function App() {
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
-  const [events, setEvents] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const calendarRef = useRef(null)
-  const loadedRangeRef = useRef({ from: null, to: null })
+  const gridViewRef = useRef(null)
   const navigateMonthRef = useRef(null)
+
+  const { events, loading, error, ensureMonthLoaded } = useCalendarData(selectedShifts, view)
 
   useEffect(() => {
     if (page === 'subscribe') return
     updateURL(selectedShifts, view, currentDate)
   }, [page, selectedShifts, view, currentDate])
-
-  const navigateTo = (path) => {
-    window.history.pushState({}, '', path)
-    setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
-  }
 
   useEffect(() => {
     const onPop = () => setPage(window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
@@ -37,89 +29,21 @@ function App() {
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
-  const fetchDataForRange = async (dateFrom, dateTo, shiftsToFetch, append = false) => {
-    try {
-      const dateFromStr = dateFrom.toISOString().split('T')[0]
-      const dateToStr = dateTo.toISOString().split('T')[0]
-
-      let url
-      if (shiftsToFetch.length === ALL_SHIFTS.length) {
-        url = `/calendars/all_shifts.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      } else if (shiftsToFetch.length === 1) {
-        url = `/calendars/shift${shiftsToFetch[0]}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      } else {
-        url = `/calendars/shift${shiftsToFetch.join(',')}.ics?date_from=${dateFromStr}&date_to=${dateToStr}`
-      }
-
-      const response = await fetch(url)
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-      const parsedEvents = parseICS(await response.text())
-
-      if (append) {
-        setEvents(prev => {
-          const existing = new Set(prev.map(e => `${e.title}-${e.start}`))
-          const newEvents = parsedEvents.filter(e => !existing.has(`${e.title}-${e.start}`))
-          return [...prev, ...newEvents].sort((a, b) => a.start.localeCompare(b.start))
-        })
-      } else {
-        setEvents(parsedEvents)
-      }
-
-      loadedRangeRef.current = {
-        from: dateFrom < (loadedRangeRef.current.from || dateFrom) ? dateFrom : (loadedRangeRef.current.from || dateFrom),
-        to:   dateTo  > (loadedRangeRef.current.to   || dateTo)   ? dateTo   : (loadedRangeRef.current.to   || dateTo),
-      }
-    } catch (err) {
-      console.error('Error fetching calendar data:', err)
-      setError(err.message)
-      throw err
-    }
-  }
-
   useEffect(() => {
-    const fetchCalendarData = async () => {
-      const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
-      if (shiftsToFetch.length === 0) { setEvents([]); loadedRangeRef.current = { from: null, to: null }; return }
-      setLoading(true); setError(null)
-      try {
-        const today = new Date()
-        await fetchDataForRange(
-          new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()),
-          new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()),
-          shiftsToFetch,
-          false
-        )
-      } finally { setLoading(false) }
+    const onKey = (e) => {
+      if (page === 'subscribe') return
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+      if (e.key === 'ArrowLeft') navigateMonthRef.current?.(-1)
+      else if (e.key === 'ArrowRight') navigateMonthRef.current?.(1)
     }
-    fetchCalendarData()
-  }, [selectedShifts, view])
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [page])
 
-  const isMonthLoaded = (year, month) => {
-    if (!loadedRangeRef.current.from || !loadedRangeRef.current.to) return false
-    const monthStart = new Date(year, month, 1)
-    const monthEnd   = new Date(year, month + 1, 0)
-    return monthStart >= loadedRangeRef.current.from && monthEnd <= loadedRangeRef.current.to
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path)
+    setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
   }
-
-  const ensureMonthLoaded = async (year, month) => {
-    if (isMonthLoaded(year, month)) return
-    const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
-    if (shiftsToFetch.length === 0) return
-    setLoading(true); setError(null)
-    try {
-      const targetDate = new Date(year, month, 1)
-      const isInPast   = !loadedRangeRef.current.from || targetDate < loadedRangeRef.current.from
-      if (isInPast) {
-        await fetchDataForRange(new Date(year, month - 12, 1), loadedRangeRef.current.from || new Date(year, month, 1), shiftsToFetch, true)
-      } else {
-        await fetchDataForRange(loadedRangeRef.current.to || new Date(year, month, 1), new Date(year, month + 13, 0), shiftsToFetch, true)
-      }
-    } finally { setLoading(false) }
-  }
-
-  useEffect(() => {
-    if (calendarRef.current) calendarRef.current.getApi().changeView(view)
-  }, [view])
 
   const handleMonthChange = (newDate) => {
     setCurrentDate(newDate)
@@ -132,23 +56,11 @@ function App() {
       d.setMonth(d.getMonth() + delta)
       handleMonthChange(d)
     } else {
-      if (delta < 0) calendarRef.current?.getApi().prev()
-      else calendarRef.current?.getApi().next()
+      gridViewRef.current?.navigate(delta)
     }
   }
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (page === 'subscribe') return
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
-      if (e.key === 'ArrowLeft') navigateMonthRef.current(-1)
-      else if (e.key === 'ArrowRight') navigateMonthRef.current(1)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [page])
-
-  const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a,b)=>a-b))
+  const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a, b) => a - b))
   const selectAll   = () => setSelectedShifts(ALL_SHIFTS)
   const clearAll    = () => setSelectedShifts([])
 
@@ -163,9 +75,7 @@ function App() {
       </header>
       <div className="app-toolbar">
         {page === 'subscribe' ? (
-          <button className="back-button" onClick={() => navigateTo('/')}>
-            ← Calendar
-          </button>
+          <button className="back-button" onClick={() => navigateTo('/')}>← Calendar</button>
         ) : (
           <>
             {view !== 'listMonth' && (
@@ -180,46 +90,29 @@ function App() {
           </>
         )}
       </div>
-      {page === 'calendar' && error && <div className="app-error">Error loading calendar data: {error}</div>}
+      {page === 'calendar' && error   && <div className="app-error">Error loading calendar data: {error}</div>}
       {page === 'calendar' && loading && <div className="app-loading">Loading…</div>}
       <div className="app-calendar">
         {page === 'subscribe' ? (
           <SubscribePage />
         ) : view === 'listMonth' ? (
-          <ShiftTableView events={events} currentDate={currentDate} onMonthChange={handleMonthChange} />
+          <ListView events={events} currentDate={currentDate} onMonthChange={handleMonthChange} />
         ) : selectedShifts.length === 0 ? (
           <div className="app-empty">Select one or more shifts above to view the calendar</div>
         ) : (
-          <FullCalendar
-            ref={calendarRef}
-            plugins={[dayGridPlugin, listPlugin]}
-            initialView={view}
-            initialDate={currentDate}
+          <GridView
+            ref={gridViewRef}
             events={events}
-            firstDay={1}
-            headerToolbar={{ left: 'prev,next today', center: 'title', right: '' }}
-            height="auto"
-            eventDisplay="block"
-            displayEventTime={false}
-            eventColor="#0a1f44"
-            eventClassNames={info => {
-              const match = info.event.title.match(/Shift (\d)/)
-              return match ? [`shift-event-${match[1]}`] : []
-            }}
-            datesSet={dateInfo => {
-              const d = dateInfo.view.currentStart
-              setCurrentDate(new Date(d.getFullYear(), d.getMonth(), 1))
-              ensureMonthLoaded(d.getFullYear(), d.getMonth())
-            }}
+            currentDate={currentDate}
+            onMonthChange={handleMonthChange}
           />
         )}
       </div>
       <footer className="app-foot">
         <span>Share: <code>{window.location.href}</code></span>
-        {page === 'subscribe'
-          ? null
-          : <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>Subscribe to iCal ↗</button>
-        }
+        {page !== 'subscribe' && (
+          <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>Subscribe to iCal ↗</button>
+        )}
       </footer>
     </div>
   )

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { ALL_SHIFTS } from '../utils'
-import './ShiftTableView.css'
+import './ListView.css'
 
 const MONTH_NAMES = [
   'January','February','March','April','May','June',
@@ -9,7 +9,7 @@ const MONTH_NAMES = [
 
 const todayStr = new Date().toISOString().slice(0, 10)
 
-function ShiftTableView({ events, currentDate, onMonthChange }) {
+function ListView({ events, currentDate, onMonthChange }) {
   const shiftMonth = (delta) => {
     const d = new Date(currentDate)
     d.setMonth(d.getMonth() + delta)
@@ -131,4 +131,4 @@ function ShiftTableView({ events, currentDate, onMonthChange }) {
   )
 }
 
-export default ShiftTableView
+export default ListView
