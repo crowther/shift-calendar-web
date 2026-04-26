@@ -93,6 +93,17 @@ function App() {
     })
   }, [])
 
+  const handlePrint = useCallback(() => {
+    const style = document.createElement('style')
+    style.textContent =
+      view === 'listMonth'
+        ? '@page { size: A4 portrait; margin: 0.5cm; }'
+        : '@page { size: A4 landscape; margin: 0.5cm; }'
+    document.head.appendChild(style)
+    window.print()
+    document.head.removeChild(style)
+  }, [view])
+
   const toggleShift = (n) =>
     setSelectedShifts((prev) =>
       prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
@@ -160,9 +171,14 @@ function App() {
         <span className="app-foot-build">{formatBuildInfo()}</span>
         <span className="app-foot-right">
           {page !== 'subscribe' && (
-            <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
-              Subscribe to iCal ↗
-            </button>
+            <>
+              <button className="print-button" onClick={handlePrint}>
+                Print / Save as PDF
+              </button>
+              <button className="subscribe-link" onClick={() => navigateTo(SUBSCRIBE_PATH)}>
+                Subscribe to iCal ↗
+              </button>
+            </>
           )}
         </span>
       </footer>

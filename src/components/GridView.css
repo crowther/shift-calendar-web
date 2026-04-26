@@ -192,3 +192,35 @@
     font-size: 18px !important;
   }
 }
+
+/* ── Print ──────────────────────────────────────────────────── */
+@media print {
+  .fc-toolbar-chunk:first-child,
+  .fc-toolbar-chunk:last-child {
+    display: none;
+  }
+  .fc-toolbar-chunk:nth-child(2) {
+    width: 100%;
+    text-align: center;
+  }
+  .fc,
+  .fc .fc-scrollgrid,
+  .fc .fc-scroller,
+  .fc .fc-scroller-harness,
+  .fc .fc-col-header,
+  .fc .fc-daygrid-body,
+  .fc .fc-scrollgrid-sync-table,
+  .fc .fc-scroller-liquid-absolute {
+    width: 100% !important;
+  }
+  .fc .fc-scroller-liquid-absolute {
+    right: 0 !important;
+    overflow: hidden !important;
+  }
+  .fc-daygrid-event,
+  .fc-col-header-cell,
+  .fc-day-today {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

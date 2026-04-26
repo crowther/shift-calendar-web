@@ -276,6 +276,17 @@
 
 /* ── Print ──────────────────────────────────────────────── */
 @media print {
+  .toolbar-nav,
+  .toolbar-spacer {
+    display: none;
+  }
+  .shift-table-toolbar {
+    display: block;
+    padding: 0 0 8px;
+  }
+  .toolbar-title {
+    font-size: 16px !important;
+  }
   .shift-table {
     page-break-inside: auto;
   }
@@ -285,7 +296,29 @@
   .shift-table thead {
     display: table-header-group;
   }
-  .shift-cell.has-event {
+  .shift-table th {
+    padding: 5px 4px;
+    font-size: 9px;
+  }
+  .date-cell {
+    padding: 3px 6px;
+  }
+  .day-name {
+    font-size: 8px;
+  }
+  .day-number {
+    font-size: 13px;
+  }
+  .shift-cell {
+    height: 28px;
+    min-height: 28px;
+  }
+  .shift-cell.has-event .shift-type {
+    font-size: 10px;
+    padding: 2px;
+  }
+  .shift-cell.has-event,
+  .shift-table thead tr {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
