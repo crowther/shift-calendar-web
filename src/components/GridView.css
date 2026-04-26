@@ -1,16 +1,28 @@
-.fc { font-family: 'Public Sans', sans-serif; }
+.fc {
+  font-family: 'Public Sans', sans-serif;
+}
 
 /* ── Grid structure ──────────────────────────────────────────── */
 .fc-scrollgrid,
-.fc-scrollgrid-sync-table { border-color: var(--ink) !important; }
-.fc-scrollgrid { border: 2px solid var(--ink) !important; border-radius: 0 !important; }
-.fc td, .fc th { border-color: var(--rule) !important; }
-.fc-scrollgrid-section > td { border: none !important; }
+.fc-scrollgrid-sync-table {
+  border-color: var(--ink) !important;
+}
+.fc-scrollgrid {
+  border: 2px solid var(--ink) !important;
+  border-radius: 0 !important;
+}
+.fc td,
+.fc th {
+  border-color: var(--rule) !important;
+}
+.fc-scrollgrid-section > td {
+  border: none !important;
+}
 
 /* ── Header row ──────────────────────────────────────────────── */
 .fc-col-header-cell {
   background: var(--ink) !important;
-  border-color: rgba(255,255,255,0.15) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 .fc-col-header-cell-cushion {
   color: var(--paper) !important;
@@ -23,9 +35,14 @@
 }
 
 /* ── Toolbar ─────────────────────────────────────────────────── */
-.fc-toolbar { margin-bottom: 0 !important; padding: 16px 0 !important; }
+.fc-toolbar {
+  margin-bottom: 0 !important;
+  padding: 16px 0 !important;
+}
 .fc-toolbar-chunk:first-child,
-.fc-toolbar-chunk:last-child { flex: 1; }
+.fc-toolbar-chunk:last-child {
+  flex: 1;
+}
 .fc-toolbar-title {
   font-family: 'Public Sans', sans-serif !important;
   font-size: 22px !important;
@@ -45,14 +62,21 @@
   box-shadow: none !important;
   text-transform: none !important;
 }
-.fc-button:hover, .fc-button:focus {
+.fc-button:hover,
+.fc-button:focus {
   background: var(--ink) !important;
   color: var(--paper) !important;
   outline: none !important;
 }
-.fc-button:disabled { opacity: 0.5 !important; }
-.fc-button-group .fc-button { border-right-width: 0 !important; }
-.fc-button-group .fc-button:last-child { border-right-width: 2px !important; }
+.fc-button:disabled {
+  opacity: 0.5 !important;
+}
+.fc-button-group .fc-button {
+  border-right-width: 0 !important;
+}
+.fc-button-group .fc-button:last-child {
+  border-right-width: 2px !important;
+}
 .fc-button-active {
   background: var(--ink) !important;
   color: var(--paper) !important;
@@ -63,7 +87,9 @@
   min-height: 110px;
   border-color: var(--rule) !important;
 }
-.fc-daygrid-day:not(.fc-day-today):hover .fc-daygrid-day-frame { background: var(--paperAlt); }
+.fc-daygrid-day:not(.fc-day-today):hover .fc-daygrid-day-frame {
+  background: var(--paperAlt);
+}
 .fc-daygrid-day-number {
   font-size: 18px !important;
   font-weight: 700 !important;
@@ -79,11 +105,18 @@
 }
 .fc-day-today {
   background-color: var(--paper) !important;
-  background-image: repeating-conic-gradient(color-mix(in srgb, var(--ink) 40%, transparent) 0% 25%, transparent 0% 50%) !important;
+  background-image: repeating-conic-gradient(
+    color-mix(in srgb, var(--ink) 40%, transparent) 0% 25%,
+    transparent 0% 50%
+  ) !important;
   background-size: 16px 16px !important;
 }
-.fc-daygrid-day-frame { position: relative; }
-.fc-day-other .fc-daygrid-day-number { opacity: 0.4 !important; }
+.fc-daygrid-day-frame {
+  position: relative;
+}
+.fc-day-other .fc-daygrid-day-number {
+  opacity: 0.4 !important;
+}
 
 /* ── Empty day dash ──────────────────────────────────────────── */
 .fc-daygrid-day:not(.fc-day-other) .fc-daygrid-day-events:not(:has(.fc-event))::after {
@@ -104,16 +137,42 @@
   font-size: 12px !important;
   font-weight: 600 !important;
 }
-.fc-event-title { font-size: 12px !important; }
+.fc-event-title {
+  font-size: 12px !important;
+}
 
-.shift-event-1 { background: var(--s1) !important; border-left-color: color-mix(in srgb, var(--s1) 50%, #000) !important; color: var(--ink) !important; }
-.shift-event-2 { background: var(--s2) !important; border-left-color: color-mix(in srgb, var(--s2) 50%, #000) !important; color: var(--ink) !important; }
-.shift-event-3 { background: var(--s3) !important; border-left-color: color-mix(in srgb, var(--s3) 50%, #000) !important; color: var(--ink) !important; }
-.shift-event-4 { background: var(--s4) !important; border-left-color: color-mix(in srgb, var(--s4) 50%, #000) !important; color: var(--ink) !important; }
-.shift-event-5 { background: var(--s5) !important; border-left-color: color-mix(in srgb, var(--s5) 50%, #000) !important; color: var(--ink) !important; }
+.shift-event-1 {
+  background: var(--s1) !important;
+  border-left-color: color-mix(in srgb, var(--s1) 50%, #000) !important;
+  color: var(--ink) !important;
+}
+.shift-event-2 {
+  background: var(--s2) !important;
+  border-left-color: color-mix(in srgb, var(--s2) 50%, #000) !important;
+  color: var(--ink) !important;
+}
+.shift-event-3 {
+  background: var(--s3) !important;
+  border-left-color: color-mix(in srgb, var(--s3) 50%, #000) !important;
+  color: var(--ink) !important;
+}
+.shift-event-4 {
+  background: var(--s4) !important;
+  border-left-color: color-mix(in srgb, var(--s4) 50%, #000) !important;
+  color: var(--ink) !important;
+}
+.shift-event-5 {
+  background: var(--s5) !important;
+  border-left-color: color-mix(in srgb, var(--s5) 50%, #000) !important;
+  color: var(--ink) !important;
+}
 
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .fc-daygrid-day { min-height: 72px; }
-  .fc-toolbar-title { font-size: 18px !important; }
+  .fc-daygrid-day {
+    min-height: 72px;
+  }
+  .fc-toolbar-title {
+    font-size: 18px !important;
+  }
 }

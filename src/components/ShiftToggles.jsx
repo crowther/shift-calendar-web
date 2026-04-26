@@ -12,7 +12,7 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
   return (
     <div className="shift-toggles">
       <div className="shift-buttons">
-        {[1, 2, 3, 4, 5].map(shift => (
+        {[1, 2, 3, 4, 5].map((shift) => (
           <button
             key={shift}
             className={`shift-button ${selectedShifts.includes(shift) ? 'active' : ''}`}
@@ -20,15 +20,22 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
           >
             <span
               className="shift-dot"
-              style={{ borderColor: SHIFT_COLORS[shift], background: selectedShifts.includes(shift) ? SHIFT_COLORS[shift] : 'transparent' }}
+              style={{
+                borderColor: SHIFT_COLORS[shift],
+                background: selectedShifts.includes(shift) ? SHIFT_COLORS[shift] : 'transparent',
+              }}
             />
             Shift {shift}
           </button>
         ))}
       </div>
       <div className="action-buttons">
-        <button className="action-button" onClick={onSelectAll}>All</button>
-        <button className="action-button" onClick={onClearAll}>None</button>
+        <button className="action-button" onClick={onSelectAll}>
+          All
+        </button>
+        <button className="action-button" onClick={onClearAll}>
+          None
+        </button>
       </div>
     </div>
   )

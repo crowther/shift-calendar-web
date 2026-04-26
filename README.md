@@ -32,10 +32,11 @@ Visit [http://localhost:3000](http://localhost:3000)
 
 The dev server proxies API requests to `http://localhost:8000` (configured in `vite.config.js`).
 
-### Lint
+### Lint and format
 
 ```bash
 npm run lint
+npm run format
 ```
 
 ### Build
@@ -123,7 +124,7 @@ Edit [Caddyfile.proxy](Caddyfile.proxy) and replace `localhost` with your domain
 
 | Parameter | Example | Description |
 |-----------|---------|-------------|
-| `shifts` | `?shifts=1,3,5` | Comma-separated shift numbers to display |
+| `shifts` | `?shifts=1-3-5` | Hyphen-separated shift numbers to display |
 | `view` | `?view=listMonth` | `dayGridMonth` (default) or `listMonth` |
 | `month` | `?month=2026-04` | Deep-link to a specific month |
 

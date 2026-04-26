@@ -38,7 +38,9 @@
   border-bottom: 1px solid var(--rule);
   min-height: 48px;
 }
-.sub-row:last-child { border-bottom: none; }
+.sub-row:last-child {
+  border-bottom: none;
+}
 
 .sub-label {
   width: 130px;
@@ -61,23 +63,38 @@
 }
 
 /* ── Shift colour rows ───────────────────────────── */
-.sub-shift-1 { background-color: var(--s1); }
-.sub-shift-2 { background-color: var(--s2); }
-.sub-shift-3 { background-color: var(--s3); }
-.sub-shift-4 { background-color: var(--s4); }
-.sub-shift-5 { background-color: var(--s5); }
+.sub-shift-1 {
+  background-color: var(--s1);
+}
+.sub-shift-2 {
+  background-color: var(--s2);
+}
+.sub-shift-3 {
+  background-color: var(--s3);
+}
+.sub-shift-4 {
+  background-color: var(--s4);
+}
+.sub-shift-5 {
+  background-color: var(--s5);
+}
 
 .sub-shift-1 .sub-label,
 .sub-shift-2 .sub-label,
 .sub-shift-3 .sub-label,
 .sub-shift-4 .sub-label,
-.sub-shift-5 .sub-label { border-right-color: rgba(0,0,0,0.12); }
+.sub-shift-5 .sub-label {
+  border-right-color: rgba(0, 0, 0, 0.12);
+}
 
 .sub-shift-1 .sub-url,
 .sub-shift-2 .sub-url,
 .sub-shift-3 .sub-url,
 .sub-shift-4 .sub-url,
-.sub-shift-5 .sub-url { color: var(--ink); border-right-color: rgba(0,0,0,0.12); }
+.sub-shift-5 .sub-url {
+  color: var(--ink);
+  border-right-color: rgba(0, 0, 0, 0.12);
+}
 
 /* ── Copy button ─────────────────────────────────── */
 .sub-copy-btn {
@@ -91,20 +108,30 @@
   padding: 10px 16px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.1s, color 0.1s;
+  transition:
+    background 0.1s,
+    color 0.1s;
   flex-shrink: 0;
 }
-.sub-copy-btn:hover { background: var(--ink); color: var(--paper); }
+.sub-copy-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 .sub-shift-1 .sub-copy-btn,
 .sub-shift-2 .sub-copy-btn,
 .sub-shift-3 .sub-copy-btn,
 .sub-shift-4 .sub-copy-btn,
-.sub-shift-5 .sub-copy-btn { background: transparent; }
+.sub-shift-5 .sub-copy-btn {
+  background: transparent;
+}
 .sub-shift-1 .sub-copy-btn:hover,
 .sub-shift-2 .sub-copy-btn:hover,
 .sub-shift-3 .sub-copy-btn:hover,
 .sub-shift-4 .sub-copy-btn:hover,
-.sub-shift-5 .sub-copy-btn:hover { background: var(--ink); color: var(--paper); }
+.sub-shift-5 .sub-copy-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 
 /* ── Custom combination checkboxes ──────────────── */
 .sub-checkboxes-row {
@@ -124,18 +151,28 @@
   user-select: none;
 }
 
-.sub-check input[type="checkbox"] {
+.sub-check input[type='checkbox'] {
   width: 16px;
   height: 16px;
   cursor: pointer;
   accent-color: var(--ink);
 }
 
-.sub-check-1 { color: color-mix(in srgb, var(--s1) 60%, #000); }
-.sub-check-2 { color: color-mix(in srgb, var(--s2) 60%, #000); }
-.sub-check-3 { color: color-mix(in srgb, var(--s3) 60%, #000); }
-.sub-check-4 { color: color-mix(in srgb, var(--s4) 60%, #000); }
-.sub-check-5 { color: color-mix(in srgb, var(--s5) 60%, #000); }
+.sub-check-1 {
+  color: color-mix(in srgb, var(--s1) 60%, #000);
+}
+.sub-check-2 {
+  color: color-mix(in srgb, var(--s2) 60%, #000);
+}
+.sub-check-3 {
+  color: color-mix(in srgb, var(--s3) 60%, #000);
+}
+.sub-check-4 {
+  color: color-mix(in srgb, var(--s4) 60%, #000);
+}
+.sub-check-5 {
+  color: color-mix(in srgb, var(--s5) 60%, #000);
+}
 
 .sub-empty {
   padding: 12px 16px;
@@ -158,8 +195,20 @@
 
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 600px) {
-  .sub-label { width: 110px; font-size: 12px; padding: 8px 10px; }
-  .sub-url   { font-size: 11px; padding: 8px 10px; }
-  .sub-copy-btn { padding: 8px 10px; font-size: 12px; }
-  .sub-checkboxes-row { gap: 14px; }
+  .sub-label {
+    width: 110px;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  .sub-url {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  .sub-copy-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .sub-checkboxes-row {
+    gap: 14px;
+  }
 }

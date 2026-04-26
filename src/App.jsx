@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, updateURL, ALL_SHIFTS } from './utils'
+import {
+  getSelectedShiftsFromURL,
+  getViewFromURL,
+  getMonthFromURL,
+  updateURL,
+  ALL_SHIFTS,
+} from './utils'
 import { useCalendarData } from './hooks/useCalendarData'
 import ShiftToggles from './components/ShiftToggles'
 import ViewSelector from './components/ViewSelector'
@@ -9,7 +15,9 @@ import SubscribePage from './components/SubscribePage'
 import './App.css'
 
 function App() {
-  const [page, setPage] = useState(() => window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
+  const [page, setPage] = useState(() =>
+    window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar'
+  )
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
   const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
@@ -23,7 +31,8 @@ function App() {
   }, [page, selectedShifts, view, currentDate])
 
   useEffect(() => {
-    const onPop = () => setPage(window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
+    const onPop = () =>
+      setPage(window.location.pathname === '/subscribe' ? 'subscribe' : 'calendar')
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
@@ -33,20 +42,26 @@ function App() {
     setPage(path === '/subscribe' ? 'subscribe' : 'calendar')
   }, [])
 
-  const handleMonthChange = useCallback((newDate) => {
-    setCurrentDate(newDate)
-    ensureMonthLoaded(newDate.getFullYear(), newDate.getMonth())
-  }, [ensureMonthLoaded])
+  const handleMonthChange = useCallback(
+    (newDate) => {
+      setCurrentDate(newDate)
+      ensureMonthLoaded(newDate.getFullYear(), newDate.getMonth())
+    },
+    [ensureMonthLoaded]
+  )
 
-  const navigateMonth = useCallback((delta) => {
-    if (view === 'listMonth') {
-      const d = new Date(currentDate)
-      d.setMonth(d.getMonth() + delta)
-      handleMonthChange(d)
-    } else {
-      gridViewRef.current?.navigate(delta)
-    }
-  }, [view, currentDate, handleMonthChange])
+  const navigateMonth = useCallback(
+    (delta) => {
+      if (view === 'listMonth') {
+        const d = new Date(currentDate)
+        d.setMonth(d.getMonth() + delta)
+        handleMonthChange(d)
+      } else {
+        gridViewRef.current?.navigate(delta)
+      }
+    },
+    [view, currentDate, handleMonthChange]
+  )
 
   useEffect(() => {
     const onKey = (e) => {
@@ -59,9 +74,12 @@ function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [page, navigateMonth])
 
-  const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a, b) => a - b))
-  const selectAll   = () => setSelectedShifts(ALL_SHIFTS)
-  const clearAll    = () => setSelectedShifts([])
+  const toggleShift = (n) =>
+    setSelectedShifts((prev) =>
+      prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
+    )
+  const selectAll = () => setSelectedShifts(ALL_SHIFTS)
+  const clearAll = () => setSelectedShifts([])
 
   return (
     <div className="app">
@@ -74,7 +92,9 @@ function App() {
       </header>
       <div className="app-toolbar">
         {page === 'subscribe' ? (
-          <button className="back-button" onClick={() => navigateTo('/')}>← Calendar</button>
+          <button className="back-button" onClick={() => navigateTo('/')}>
+            ← Calendar
+          </button>
         ) : (
           <>
             {view !== 'listMonth' && (
@@ -89,7 +109,9 @@ function App() {
           </>
         )}
       </div>
-      {page === 'calendar' && error   && <div className="app-error">Error loading calendar data: {error}</div>}
+      {page === 'calendar' && error && (
+        <div className="app-error">Error loading calendar data: {error}</div>
+      )}
       {page === 'calendar' && loading && <div className="app-loading">Loading…</div>}
       <div className="app-calendar">
         {page === 'subscribe' ? (
@@ -108,9 +130,13 @@ function App() {
         )}
       </div>
       <footer className="app-foot">
-        <span>Share: <code>{window.location.href}</code></span>
+        <span>
+          Share: <code>{window.location.href}</code>
+        </span>
         {page !== 'subscribe' && (
-          <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>Subscribe to iCal ↗</button>
+          <button className="subscribe-link" onClick={() => navigateTo('/subscribe')}>
+            Subscribe to iCal ↗
+          </button>
         )}
       </footer>
     </div>

@@ -1,17 +1,56 @@
-@font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-400-normal.woff2') format('woff2'); }
-@font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-500-normal.woff2') format('woff2'); }
-@font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-600-normal.woff2') format('woff2'); }
-@font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-700-normal.woff2') format('woff2'); }
-@font-face { font-family: 'Public Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-800-normal.woff2') format('woff2'); }
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-400-normal.woff2')
+    format('woff2');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-500-normal.woff2')
+    format('woff2');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-600-normal.woff2')
+    format('woff2');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-700-normal.woff2')
+    format('woff2');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource/public-sans@5.0.18/files/public-sans-latin-800-normal.woff2')
+    format('woff2');
+}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
-  --ink:      #0a1f44;
-  --inkSoft:  #3a4a6b;
-  --paper:    #ffffff;
+  --ink: #0a1f44;
+  --inkSoft: #3a4a6b;
+  --paper: #ffffff;
   --paperAlt: #f3f2f1;
-  --rule:     #b1b4b6;
+  --rule: #b1b4b6;
 
   --s1: #d98c80;
   --s2: #74b090;
@@ -20,14 +59,20 @@
   --s5: #9888c0;
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 body {
   font-family: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
   background: var(--paperAlt);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
-button { font-family: inherit; cursor: pointer; }
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
 
 /* Sillitoe tartan — 3 rows of alternating ink/white squares offset by half */
 .tartan {
@@ -35,8 +80,29 @@ button { font-family: inherit; cursor: pointer; }
   height: calc(var(--sq) * 3);
   width: 100%;
   background:
-    linear-gradient(to right, var(--ink) 0, var(--ink) var(--sq), transparent var(--sq), transparent calc(var(--sq)*2)) 0 0 / calc(var(--sq)*2) var(--sq) repeat-x,
-    linear-gradient(to right, transparent 0, transparent var(--sq), var(--ink) var(--sq), var(--ink) calc(var(--sq)*2)) 0 var(--sq) / calc(var(--sq)*2) var(--sq) repeat-x,
-    linear-gradient(to right, var(--ink) 0, var(--ink) var(--sq), transparent var(--sq), transparent calc(var(--sq)*2)) 0 calc(var(--sq)*2) / calc(var(--sq)*2) var(--sq) repeat-x,
+    linear-gradient(
+        to right,
+        var(--ink) 0,
+        var(--ink) var(--sq),
+        transparent var(--sq),
+        transparent calc(var(--sq) * 2)
+      )
+      0 0 / calc(var(--sq) * 2) var(--sq) repeat-x,
+    linear-gradient(
+        to right,
+        transparent 0,
+        transparent var(--sq),
+        var(--ink) var(--sq),
+        var(--ink) calc(var(--sq) * 2)
+      )
+      0 var(--sq) / calc(var(--sq) * 2) var(--sq) repeat-x,
+    linear-gradient(
+        to right,
+        var(--ink) 0,
+        var(--ink) var(--sq),
+        transparent var(--sq),
+        transparent calc(var(--sq) * 2)
+      )
+      0 calc(var(--sq) * 2) / calc(var(--sq) * 2) var(--sq) repeat-x,
     var(--paper);
 }

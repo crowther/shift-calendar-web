@@ -10,7 +10,7 @@ const GridView = forwardRef(function GridView({ events, currentDate, onMonthChan
     navigate: (delta) => {
       if (delta < 0) calendarRef.current?.getApi().prev()
       else calendarRef.current?.getApi().next()
-    }
+    },
   }))
 
   return (
@@ -26,11 +26,11 @@ const GridView = forwardRef(function GridView({ events, currentDate, onMonthChan
       eventDisplay="block"
       displayEventTime={false}
       eventColor="#0a1f44"
-      eventClassNames={info => {
+      eventClassNames={(info) => {
         const match = info.event.title.match(/Shift (\d)/)
         return match ? [`shift-event-${match[1]}`] : []
       }}
-      datesSet={dateInfo => {
+      datesSet={(dateInfo) => {
         const d = dateInfo.view.currentStart
         onMonthChange(new Date(d.getFullYear(), d.getMonth(), 1))
       }}

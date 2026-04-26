@@ -14,8 +14,18 @@
   font-size: 13px;
   font-weight: 600;
   font-family: inherit;
-  transition: background 0.1s, color 0.1s;
+  transition:
+    background 0.1s,
+    color 0.1s;
 }
-.view-button:last-child { border-right: none; }
-.view-button:hover  { background: var(--ink); color: var(--paper); }
-.view-button.active { background: var(--ink); color: var(--paper); }
+.view-button:last-child {
+  border-right: none;
+}
+.view-button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.view-button.active {
+  background: var(--ink);
+  color: var(--paper);
+}

@@ -46,8 +46,8 @@ export function getSelectedShiftsFromURL() {
   if (!shiftsParam) return []
   return shiftsParam
     .split('-')
-    .map(s => parseInt(s.trim()))
-    .filter(s => s >= 1 && s <= 5)
+    .map((s) => parseInt(s.trim()))
+    .filter((s) => s >= 1 && s <= 5)
     .sort((a, b) => a - b)
 }
 

@@ -23,18 +23,34 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: background 0.1s, color 0.1s;
+  transition:
+    background 0.1s,
+    color 0.1s;
   white-space: nowrap;
 }
-.shift-button:last-child { border-right: none; }
-.shift-button:hover { background: var(--ink); color: var(--paper); }
-.shift-button:hover .shift-dot { border-color: var(--paper); background: var(--paper); }
+.shift-button:last-child {
+  border-right: none;
+}
+.shift-button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.shift-button:hover .shift-dot {
+  border-color: var(--paper);
+  background: var(--paper);
+}
 
-.shift-button.active { background: var(--ink); color: var(--paper); }
-.shift-button.active .shift-dot { background: var(--paper); }
+.shift-button.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.shift-button.active .shift-dot {
+  background: var(--paper);
+}
 
 .shift-dot {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border: 2px solid;
   flex-shrink: 0;
@@ -54,13 +70,28 @@
   padding: 8px 14px;
   font-size: 13px;
   font-weight: 600;
-  transition: background 0.1s, color 0.1s;
+  transition:
+    background 0.1s,
+    color 0.1s;
 }
-.action-button:last-child { border-right: none; }
-.action-button:hover { background: var(--ink); color: var(--paper); }
+.action-button:last-child {
+  border-right: none;
+}
+.action-button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 
 @media (max-width: 768px) {
-  .shift-toggles { gap: 10px; }
-  .shift-button { padding: 7px 10px; font-size: 12px; }
-  .action-button { padding: 7px 10px; font-size: 12px; }
+  .shift-toggles {
+    gap: 10px;
+  }
+  .shift-button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  .action-button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
 }

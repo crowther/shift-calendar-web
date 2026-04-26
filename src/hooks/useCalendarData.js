@@ -10,7 +10,7 @@ export function useCalendarData(selectedShifts, view) {
   const fetchDataForRange = useCallback(async (dateFrom, dateTo, shiftsToFetch, append = false) => {
     try {
       const dateFromStr = dateFrom.toISOString().split('T')[0]
-      const dateToStr   = dateTo.toISOString().split('T')[0]
+      const dateToStr = dateTo.toISOString().split('T')[0]
 
       let url
       if (shiftsToFetch.length === ALL_SHIFTS.length) {
@@ -26,9 +26,9 @@ export function useCalendarData(selectedShifts, view) {
       const parsedEvents = parseICS(await response.text())
 
       if (append) {
-        setEvents(prev => {
-          const existing = new Set(prev.map(e => `${e.title}-${e.start}`))
-          const newEvents = parsedEvents.filter(e => !existing.has(`${e.title}-${e.start}`))
+        setEvents((prev) => {
+          const existing = new Set(prev.map((e) => `${e.title}-${e.start}`))
+          const newEvents = parsedEvents.filter((e) => !existing.has(`${e.title}-${e.start}`))
           return [...prev, ...newEvents].sort((a, b) => a.start.localeCompare(b.start))
         })
       } else {
@@ -36,8 +36,14 @@ export function useCalendarData(selectedShifts, view) {
       }
 
       loadedRangeRef.current = {
-        from: dateFrom < (loadedRangeRef.current.from || dateFrom) ? dateFrom : (loadedRangeRef.current.from || dateFrom),
-        to:   dateTo   > (loadedRangeRef.current.to   || dateTo)   ? dateTo   : (loadedRangeRef.current.to   || dateTo),
+        from:
+          dateFrom < (loadedRangeRef.current.from || dateFrom)
+            ? dateFrom
+            : loadedRangeRef.current.from || dateFrom,
+        to:
+          dateTo > (loadedRangeRef.current.to || dateTo)
+            ? dateTo
+            : loadedRangeRef.current.to || dateTo,
       }
     } catch (err) {
       console.error('Error fetching calendar data:', err)
@@ -66,28 +72,41 @@ export function useCalendarData(selectedShifts, view) {
   const isMonthLoaded = useCallback((year, month) => {
     if (!loadedRangeRef.current.from || !loadedRangeRef.current.to) return false
     const monthStart = new Date(year, month, 1)
-    const monthEnd   = new Date(year, month + 1, 0)
+    const monthEnd = new Date(year, month + 1, 0)
     return monthStart >= loadedRangeRef.current.from && monthEnd <= loadedRangeRef.current.to
   }, [])
 
-  const ensureMonthLoaded = useCallback(async (year, month) => {
-    if (isMonthLoaded(year, month)) return
-    const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
-    if (shiftsToFetch.length === 0) return
-    setLoading(true)
-    setError(null)
-    try {
-      const targetDate = new Date(year, month, 1)
-      const isInPast   = !loadedRangeRef.current.from || targetDate < loadedRangeRef.current.from
-      if (isInPast) {
-        await fetchDataForRange(new Date(year, month - 12, 1), loadedRangeRef.current.from || new Date(year, month, 1), shiftsToFetch, true)
-      } else {
-        await fetchDataForRange(loadedRangeRef.current.to || new Date(year, month, 1), new Date(year, month + 13, 0), shiftsToFetch, true)
+  const ensureMonthLoaded = useCallback(
+    async (year, month) => {
+      if (isMonthLoaded(year, month)) return
+      const shiftsToFetch = view === 'listMonth' ? ALL_SHIFTS : selectedShifts
+      if (shiftsToFetch.length === 0) return
+      setLoading(true)
+      setError(null)
+      try {
+        const targetDate = new Date(year, month, 1)
+        const isInPast = !loadedRangeRef.current.from || targetDate < loadedRangeRef.current.from
+        if (isInPast) {
+          await fetchDataForRange(
+            new Date(year, month - 12, 1),
+            loadedRangeRef.current.from || new Date(year, month, 1),
+            shiftsToFetch,
+            true
+          )
+        } else {
+          await fetchDataForRange(
+            loadedRangeRef.current.to || new Date(year, month, 1),
+            new Date(year, month + 13, 0),
+            shiftsToFetch,
+            true
+          )
+        }
+      } finally {
+        setLoading(false)
       }
-    } finally {
-      setLoading(false)
-    }
-  }, [view, selectedShifts, fetchDataForRange, isMonthLoaded])
+    },
+    [view, selectedShifts, fetchDataForRange, isMonthLoaded]
+  )
 
   const noShiftsSelected = view !== 'listMonth' && selectedShifts.length === 0
   return { events: noShiftsSelected ? [] : events, loading, error, ensureMonthLoaded }

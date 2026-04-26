@@ -15,21 +15,34 @@
   justify-content: space-between;
   gap: 24px;
 }
-.app-banner-left { display: flex; align-items: center; gap: 16px; }
+.app-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .app-crest {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border: 2px solid var(--paper);
-  display: grid; place-items: center;
-  font-weight: 700; font-size: 14px; letter-spacing: 0.04em;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
   font-family: 'Public Sans', sans-serif;
   flex-shrink: 0;
 }
 .app-title {
-  font-size: 20px; font-weight: 700; letter-spacing: -0.005em; margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  margin: 0;
 }
 .app-banner-meta {
   font-family: 'Public Sans', sans-serif;
-  font-size: 12px; letter-spacing: 0.04em; opacity: 0.85;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
 }
 
 /* ── Toolbar ────────────────────────────────────────────────── */
@@ -42,7 +55,9 @@
   gap: 16px;
   flex-wrap: wrap;
 }
-.app-toolbar .view-selector { margin-left: auto; }
+.app-toolbar .view-selector {
+  margin-left: auto;
+}
 
 /* ── Subscribe / back nav ───────────────────────────────────── */
 .back-button,
@@ -55,10 +70,15 @@
   font-weight: 600;
   padding: 7px 14px;
   cursor: pointer;
-  transition: background 0.1s, color 0.1s;
+  transition:
+    background 0.1s,
+    color 0.1s;
 }
 .back-button:hover,
-.subscribe-link:hover { background: var(--ink); color: var(--paper); }
+.subscribe-link:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
 
 /* ── Status / feedback ──────────────────────────────────────── */
 .app-error {
@@ -113,9 +133,23 @@
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .app-banner { padding: 12px 16px; gap: 12px; }
-  .app-title  { font-size: 16px; }
-  .app-toolbar { padding: 12px 16px; }
-  .app-calendar { padding: 16px 16px 24px; }
-  .app-foot { padding: 12px 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .app-banner {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .app-title {
+    font-size: 16px;
+  }
+  .app-toolbar {
+    padding: 12px 16px;
+  }
+  .app-calendar {
+    padding: 16px 16px 24px;
+  }
+  .app-foot {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

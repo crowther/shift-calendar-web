@@ -6,6 +6,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
+    // Proxy API requests to a locally-running API server (not Docker)
     proxy: {
       '/calendars': {
         target: 'http://localhost:8000',

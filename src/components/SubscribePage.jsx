@@ -32,30 +32,32 @@ function SubscribePage() {
   const base = window.location.origin
 
   const toggleShift = (n) =>
-    setSelectedShifts(prev =>
-      prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a, b) => a - b)
+    setSelectedShifts((prev) =>
+      prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
     )
 
-  const customUrl = selectedShifts.length === 0 ? null
-    : selectedShifts.length === ALL_SHIFTS.length
-    ? `${base}/calendars/all_shifts.ics`
-    : selectedShifts.length === 1
-    ? `${base}/calendars/shift${selectedShifts[0]}.ics`
-    : `${base}/calendars/shift${selectedShifts.join(',')}.ics`
+  const customUrl =
+    selectedShifts.length === 0
+      ? null
+      : selectedShifts.length === ALL_SHIFTS.length
+        ? `${base}/calendars/all_shifts.ics`
+        : selectedShifts.length === 1
+          ? `${base}/calendars/shift${selectedShifts[0]}.ics`
+          : `${base}/calendars/shift${selectedShifts.join(',')}.ics`
 
   return (
     <div className="subscribe-page">
       <p className="subscribe-intro">
-        Subscribe to a shift calendar from any app that supports iCal —
-        Google Calendar, Apple Calendar, Outlook, and most others.
-        The calendar updates automatically when the schedule changes.
+        Subscribe to a shift calendar from any app that supports iCal — Google Calendar, Apple
+        Calendar, Outlook, and most others. The calendar updates automatically when the schedule
+        changes.
       </p>
 
       <div className="sub-section">
         <div className="sub-section-header">Shift calendars</div>
         <div className="sub-table">
           <UrlRow label="All shifts" url={`${base}/calendars/all_shifts.ics`} />
-          {ALL_SHIFTS.map(n => (
+          {ALL_SHIFTS.map((n) => (
             <UrlRow
               key={n}
               label={`Shift ${n}`}
@@ -70,7 +72,7 @@ function SubscribePage() {
         <div className="sub-section-header">Custom combination</div>
         <div className="sub-table">
           <div className="sub-row sub-checkboxes-row">
-            {ALL_SHIFTS.map(n => (
+            {ALL_SHIFTS.map((n) => (
               <label key={n} className={`sub-check sub-check-${n}`}>
                 <input
                   type="checkbox"
@@ -81,10 +83,11 @@ function SubscribePage() {
               </label>
             ))}
           </div>
-          {customUrl
-            ? <UrlRow label="Your URL" url={customUrl} />
-            : <div className="sub-row sub-empty">Select at least one shift above</div>
-          }
+          {customUrl ? (
+            <UrlRow label="Your URL" url={customUrl} />
+          ) : (
+            <div className="sub-row sub-empty">Select at least one shift above</div>
+          )}
         </div>
       </div>
 
