@@ -65,7 +65,6 @@
   justify-content: center;
 }
 
-.toolbar-spacer { /* placeholder right column */ }
 
 /* ── Grid ───────────────────────────────────────────────── */
 .shift-table-container { overflow-x: auto; }
@@ -174,6 +173,7 @@
   display: inline-block;
 }
 .shift-cell:not(.has-event) { color: var(--inkSoft); }
+.shift-empty { color: var(--rule); font-size: 14px; }
 
 .shift-table-empty {
   padding: 60px 20px;

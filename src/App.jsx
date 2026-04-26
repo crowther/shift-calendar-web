@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
-import { parseICS, getSelectedShiftsFromURL, getViewFromURL, updateURL, ALL_SHIFTS } from './utils'
+import { parseICS, getSelectedShiftsFromURL, getViewFromURL, getMonthFromURL, updateURL, ALL_SHIFTS } from './utils'
 import ShiftToggles from './components/ShiftToggles'
 import ViewSelector from './components/ViewSelector'
 import ShiftTableView from './components/ShiftTableView'
@@ -11,15 +11,17 @@ import './App.css'
 function App() {
   const [selectedShifts, setSelectedShifts] = useState(() => getSelectedShiftsFromURL())
   const [view, setView] = useState(() => getViewFromURL())
+  const [currentDate, setCurrentDate] = useState(() => getMonthFromURL() ?? new Date())
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const calendarRef = useRef(null)
   const loadedRangeRef = useRef({ from: null, to: null })
+  const navigateMonthRef = useRef(null)
 
   useEffect(() => {
-    updateURL(selectedShifts, view)
-  }, [selectedShifts, view])
+    updateURL(selectedShifts, view, currentDate)
+  }, [selectedShifts, view, currentDate])
 
   const fetchDataForRange = async (dateFrom, dateTo, shiftsToFetch, append = false) => {
     try {
@@ -105,6 +107,32 @@ function App() {
     if (calendarRef.current) calendarRef.current.getApi().changeView(view)
   }, [view])
 
+  const handleMonthChange = (newDate) => {
+    setCurrentDate(newDate)
+    ensureMonthLoaded(newDate.getFullYear(), newDate.getMonth())
+  }
+
+  navigateMonthRef.current = (delta) => {
+    if (view === 'listMonth') {
+      const d = new Date(currentDate)
+      d.setMonth(d.getMonth() + delta)
+      handleMonthChange(d)
+    } else {
+      if (delta < 0) calendarRef.current?.getApi().prev()
+      else calendarRef.current?.getApi().next()
+    }
+  }
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+      if (e.key === 'ArrowLeft') navigateMonthRef.current(-1)
+      else if (e.key === 'ArrowRight') navigateMonthRef.current(1)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   const toggleShift = n => setSelectedShifts(prev => prev.includes(n) ? prev.filter(s => s !== n) : [...prev, n].sort((a,b)=>a-b))
   const selectAll   = () => setSelectedShifts(ALL_SHIFTS)
   const clearAll    = () => setSelectedShifts([])
@@ -133,7 +161,7 @@ function App() {
       {loading && <div className="app-loading">Loading…</div>}
       <div className="app-calendar">
         {view === 'listMonth' ? (
-          <ShiftTableView events={events} onMonthChange={ensureMonthLoaded} />
+          <ShiftTableView events={events} currentDate={currentDate} onMonthChange={handleMonthChange} />
         ) : selectedShifts.length === 0 ? (
           <div className="app-empty">Select one or more shifts above to view the calendar</div>
         ) : (
@@ -141,6 +169,7 @@ function App() {
             ref={calendarRef}
             plugins={[dayGridPlugin, listPlugin]}
             initialView={view}
+            initialDate={currentDate}
             events={events}
             firstDay={1}
             headerToolbar={{ left: 'prev,next today', center: 'title', right: '' }}
@@ -152,7 +181,11 @@ function App() {
               const match = info.event.title.match(/Shift (\d)/)
               return match ? [`shift-event-${match[1]}`] : []
             }}
-            datesSet={dateInfo => ensureMonthLoaded(dateInfo.view.currentStart.getFullYear(), dateInfo.view.currentStart.getMonth())}
+            datesSet={dateInfo => {
+              const d = dateInfo.view.currentStart
+              setCurrentDate(new Date(d.getFullYear(), d.getMonth(), 1))
+              ensureMonthLoaded(d.getFullYear(), d.getMonth())
+            }}
           />
         )}
       </div>

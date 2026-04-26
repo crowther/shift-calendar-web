@@ -183,6 +183,16 @@
 .fc-daygrid-day-frame { position: relative; }
 .fc-day-other .fc-daygrid-day-number { opacity: 0.4 !important; }
 
+/* Empty day dash */
+.fc-daygrid-day:not(.fc-day-other) .fc-daygrid-day-events:not(:has(.fc-event))::after {
+  content: '–';
+  display: block;
+  text-align: center;
+  color: var(--rule);
+  font-size: 14px;
+  padding: 6px 0;
+}
+
 /* Events — coloured left-border blocks */
 .fc-daygrid-event {
   border-radius: 0 !important;

@@ -56,7 +56,16 @@ export function getViewFromURL() {
   return params.get('view') === 'list' ? 'listMonth' : 'dayGridMonth'
 }
 
-export function updateURL(selectedShifts, view) {
+export function getMonthFromURL() {
+  const params = new URLSearchParams(window.location.search)
+  const m = params.get('month')
+  if (!m) return null
+  const [year, month] = m.split('-').map(Number)
+  if (!year || !month) return null
+  return new Date(year, month - 1, 1)
+}
+
+export function updateURL(selectedShifts, view, date) {
   const params = new URLSearchParams()
   if (view === 'listMonth') {
     params.set('view', 'list')
@@ -64,8 +73,8 @@ export function updateURL(selectedShifts, view) {
     params.set('view', 'grid')
     if (selectedShifts.length > 0) params.set('shifts', selectedShifts.join('-'))
   }
-  const newURL = params.toString()
-    ? `${window.location.pathname}?${params.toString()}`
-    : window.location.pathname
-  window.history.replaceState({}, '', newURL)
+  if (date) {
+    params.set('month', `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`)
+  }
+  window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`)
 }

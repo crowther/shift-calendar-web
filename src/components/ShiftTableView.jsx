@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ALL_SHIFTS } from '../utils'
 import './ShiftTableView.css'
 
@@ -9,18 +9,11 @@ const MONTH_NAMES = [
 
 const todayStr = new Date().toISOString().slice(0, 10)
 
-function ShiftTableView({ events, onMonthChange }) {
-  const [currentDate, setCurrentDate] = useState(new Date())
-
-  const handleMonthChange = (newDate) => {
-    setCurrentDate(newDate)
-    onMonthChange?.(newDate.getFullYear(), newDate.getMonth())
-  }
-
+function ShiftTableView({ events, currentDate, onMonthChange }) {
   const shiftMonth = (delta) => {
     const d = new Date(currentDate)
     d.setMonth(d.getMonth() + delta)
-    handleMonthChange(d)
+    onMonthChange(d)
   }
 
   const year  = currentDate.getFullYear()
@@ -65,7 +58,7 @@ function ShiftTableView({ events, onMonthChange }) {
             <span className="fc-icon fc-icon-chevron-right" />
           </button>
         </div>
-        <button className="today-button" onClick={() => handleMonthChange(new Date())} disabled={isCurrentMonth}>today</button>
+        <button className="today-button" onClick={() => onMonthChange(new Date())} disabled={isCurrentMonth}>today</button>
       </div>
       <h2 className="toolbar-title">{MONTH_NAMES[month]} {year}</h2>
       <div className="toolbar-spacer" />
@@ -124,7 +117,7 @@ function ShiftTableView({ events, onMonthChange }) {
                         key={n}
                         className={['shift-cell', event && `has-event shift-bg-${n}`, isToday && 'today-cell'].filter(Boolean).join(' ')}
                       >
-                        {event && <div className="shift-type">{getShiftType(event)}</div>}
+                        {event ? <div className="shift-type">{getShiftType(event)}</div> : <span className="shift-empty">–</span>}
                       </td>
                     )
                   })}
