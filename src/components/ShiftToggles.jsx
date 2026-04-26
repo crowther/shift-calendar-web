@@ -15,7 +15,7 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
               className="shift-swatch"
               style={{ background: `var(--s${shift})` }}
             />
-            Shift {shift}
+            <span className="shift-label">Shift {shift}</span>
           </button>
         ))}
       </div>
