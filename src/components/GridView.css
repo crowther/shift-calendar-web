@@ -147,27 +147,27 @@
 
 .shift-event-1 {
   background: var(--s1) !important;
-  border-left-color: color-mix(in srgb, var(--s1) 50%, #000) !important;
+  border-left-color: color-mix(in srgb, var(--s1) 70%, #000) !important;
   color: var(--ink) !important;
 }
 .shift-event-2 {
   background: var(--s2) !important;
-  border-left-color: color-mix(in srgb, var(--s2) 50%, #000) !important;
+  border-left-color: color-mix(in srgb, var(--s2) 70%, #000) !important;
   color: var(--ink) !important;
 }
 .shift-event-3 {
   background: var(--s3) !important;
-  border-left-color: color-mix(in srgb, var(--s3) 50%, #000) !important;
+  border-left-color: color-mix(in srgb, var(--s3) 70%, #000) !important;
   color: var(--ink) !important;
 }
 .shift-event-4 {
   background: var(--s4) !important;
-  border-left-color: color-mix(in srgb, var(--s4) 50%, #000) !important;
+  border-left-color: color-mix(in srgb, var(--s4) 70%, #000) !important;
   color: var(--ink) !important;
 }
 .shift-event-5 {
   background: var(--s5) !important;
-  border-left-color: color-mix(in srgb, var(--s5) 50%, #000) !important;
+  border-left-color: color-mix(in srgb, var(--s5) 70%, #000) !important;
   color: var(--ink) !important;
 }
 
