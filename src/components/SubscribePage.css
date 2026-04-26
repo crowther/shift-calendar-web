@@ -157,6 +157,15 @@
   font-size: 13px;
   color: var(--inkSoft);
   padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sub-instruction-note {
+  font-size: 12px;
+  color: var(--inkSoft);
+  opacity: 0.75;
 }
 
 /* ── Responsive ──────────────────────────────────── */

@@ -49,9 +49,7 @@ function SubscribePage() {
   return (
     <div className="subscribe-page">
       <p className="subscribe-intro">
-        Subscribe to a shift calendar from any app that supports iCal — Google Calendar, Apple
-        Calendar, Outlook, and most others. The calendar updates automatically when the schedule
-        changes.
+        Subscribe to a shift calendar from any app that supports iCal. The calendar will populate indefinitely.
       </p>
 
       <div className="sub-section">
@@ -91,16 +89,20 @@ function SubscribePage() {
         <div className="sub-section-header">How to subscribe</div>
         <div className="sub-table sub-instructions">
           <div className="sub-row">
-            <span className="sub-label">Google Calendar</span>
-            <span className="sub-instruction">Settings → Add calendar → From URL</span>
+            <span className="sub-label">iPhone</span>
+            <span className="sub-instruction">
+              Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar
+            </span>
           </div>
           <div className="sub-row">
-            <span className="sub-label">Apple Calendar</span>
-            <span className="sub-instruction">File → New Calendar Subscription</span>
-          </div>
-          <div className="sub-row">
-            <span className="sub-label">Outlook</span>
-            <span className="sub-instruction">Add calendar → Subscribe from web</span>
+            <span className="sub-label">Android</span>
+            <span className="sub-instruction">
+              Open calendar.google.com in a browser → Other calendars (+) → From URL
+              <span className="sub-instruction-note">
+                The Google Calendar app does not support subscribing directly — add it via the
+                website and it will sync to your phone.
+              </span>
+            </span>
           </div>
         </div>
       </div>
