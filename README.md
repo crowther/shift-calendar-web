@@ -4,12 +4,12 @@ Interactive calendar web application for viewing shift schedules.
 
 ## Features
 
-- 🗓️ **Multiple views**: Month grid and list views
-- 🎨 **Shift toggles**: Click to show/hide individual shifts
-- 🔗 **Shareable links**: URL encodes selected shifts, view, and month
-- 📱 **Responsive**: Works on desktop and mobile
-- 📅 **iCal subscribe**: Import shifts into any calendar app
-- ⚡ **Fast**: Vite build, optimised production bundle
+- **Multiple views**: Month grid and list views
+- **Shift toggles**: Click to show/hide individual shifts
+- **Shareable links**: URL encodes selected shifts, view, and month
+- **Keyboard navigation**: Left/right arrow keys to step through months
+- **Responsive**: Works on desktop and mobile
+- **iCal subscribe**: Import shifts into any calendar app
 
 ## Development
 
@@ -21,16 +21,13 @@ Interactive calendar web application for viewing shift schedules.
 ### Local Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000)
+Visit [http://localhost:3000/shift-calendar/](http://localhost:3000/shift-calendar/)
 
-The dev server proxies API requests to `http://localhost:8000` (configured in `vite.config.js`).
+The dev server proxies `/shift-calendar/calendars/*` and `/shift-calendar/health` to a locally-running API at `http://localhost:8000` (configured in `vite.config.js`).
 
 ### Lint and format
 
@@ -48,8 +45,25 @@ npm run preview
 
 ## Docker Deployment
 
+Copy `.env.example` to `.env` and configure your domain:
+
 ```bash
-# Build and start all services
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```
+# Local testing
+DOMAIN=localhost
+
+# Production — bare hostname, no http:// prefix (Caddy handles TLS automatically)
+DOMAIN=your-domain.com
+```
+
+Start all services:
+
+```bash
 docker compose up -d
 
 # View logs
@@ -59,10 +73,9 @@ docker compose logs -f
 docker compose down
 ```
 
-**Services:**
-- **api** (internal): FastAPI backend
-- **web** (internal): Caddy serving the React app
-- **caddy** (ports 80/443): Reverse proxy
+The app is served at `/shift-calendar/`. Root and bare `/shift-calendar` redirect there automatically.
+
+**TLS:** For a public domain, Caddy obtains a Let's Encrypt certificate automatically on first request. For `localhost`, Caddy serves HTTP only.
 
 ### Architecture
 
@@ -70,9 +83,16 @@ docker compose down
 User
  ↓
 Caddy Proxy (:80/:443)
- ├──→ React frontend (web)
- └──→ API (api :8000) for /calendars/*
+ └── /shift-calendar/* → web (prefix stripped)
+       ├── /calendars/* → api:8000
+       └── /*           → React SPA (index.html)
 ```
+
+**Services:**
+
+- **api** (internal): FastAPI backend
+- **web** (internal): Caddy serving the built React app
+- **caddy** (ports 80/443): Reverse proxy, TLS termination
 
 ## Project Structure
 
@@ -92,12 +112,13 @@ shift-calendar-web/
 │   ├── main.jsx                    # Entry point
 │   ├── index.css                   # Global styles and shift colours
 │   └── utils.js                    # ICS parser, URL state helpers
+├── .env.example                    # Environment variable template
 ├── .mise.toml                      # Node version pin
 ├── eslint.config.js
 ├── index.html
 ├── vite.config.js
 ├── Dockerfile                      # Multi-stage build
-├── Caddyfile.frontend              # Frontend server config
+├── Caddyfile.frontend              # Frontend container config
 ├── Caddyfile.proxy                 # Reverse proxy config
 ├── docker-compose.yml
 └── package.json
@@ -105,20 +126,18 @@ shift-calendar-web/
 
 ## Configuration
 
-### API Endpoint
+### Domain
 
-In production, Caddy proxies `/calendars/*` and `/health` to the API container.
+Set `DOMAIN` in `.env`. No `http://` prefix — Caddy infers the scheme:
 
-- **Development:** configured in [vite.config.js](vite.config.js)
-- **Production:** configured in [Caddyfile.frontend](Caddyfile.frontend)
+| Value | Result |
+|-------|--------|
+| `localhost` | HTTP only, no TLS |
+| `your-domain.com` | HTTPS with automatic Let's Encrypt certificate |
 
 ### Shift Colours
 
 Edit CSS variables `--s1` through `--s5` in [src/index.css](src/index.css).
-
-### Production Domain
-
-Edit [Caddyfile.proxy](Caddyfile.proxy) and replace `localhost` with your domain.
 
 ## URL Parameters
 
@@ -135,7 +154,7 @@ Edit [Caddyfile.proxy](Caddyfile.proxy) and replace `localhost` with your domain
 ```bash
 docker compose ps
 docker compose logs api
-curl http://localhost/calendars/all_shifts.ics
+curl http://localhost/shift-calendar/calendars/all_shifts.ics
 ```
 
 ### Build fails

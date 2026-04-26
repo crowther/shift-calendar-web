@@ -15,6 +15,7 @@ services:
 
   # React Frontend
   web:
+    image: ghcr.io/crowther/shift-calendar-web:latest
     build: .
     container_name: shift-calendar-web
     depends_on:
