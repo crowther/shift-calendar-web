@@ -12,11 +12,8 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
             onClick={() => onToggle(shift)}
           >
             <span
-              className="shift-dot"
-              style={{
-                borderColor: `var(--s${shift})`,
-                background: selectedShifts.includes(shift) ? `var(--s${shift})` : 'transparent',
-              }}
+              className="shift-swatch"
+              style={{ background: `var(--s${shift})` }}
             />
             Shift {shift}
           </button>

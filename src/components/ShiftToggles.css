@@ -17,18 +17,20 @@
   border: none;
   border-right: 2px solid var(--ink);
   color: var(--ink);
-  padding: 8px 16px;
+  padding: 0 10px 0 0;
+  min-height: 36px;
   font-size: 13px;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 92px;
+  justify-content: flex-start;
+  gap: 0;
+  width: 82px;
   transition:
     background 0.1s,
     color 0.1s;
   white-space: nowrap;
+  overflow: hidden;
 }
 .shift-button:last-child {
   border-right: none;
@@ -37,25 +39,16 @@
   background: var(--ink);
   color: var(--paper);
 }
-.shift-button:hover .shift-dot {
-  border-color: var(--paper);
-  background: var(--paper);
-}
-
 .shift-button.active {
   background: var(--ink);
   color: var(--paper);
 }
-.shift-button.active .shift-dot {
-  background: var(--paper);
-}
 
-.shift-dot {
-  width: 10px;
-  height: 10px;
-  display: inline-block;
-  border: 2px solid;
+.shift-swatch {
+  width: 14px;
+  align-self: stretch;
   flex-shrink: 0;
+  margin-right: 10px;
 }
 
 /* Action buttons */
@@ -89,9 +82,9 @@
     gap: 10px;
   }
   .shift-button {
-    padding: 7px 10px;
+    padding: 0 8px 0 0;
     font-size: 12px;
-    width: 78px;
+    width: 72px;
   }
   .action-button {
     padding: 7px 10px;
