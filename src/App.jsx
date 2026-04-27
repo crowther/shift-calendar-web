@@ -27,6 +27,8 @@ function formatBuildInfo() {
   return `v${__APP_VERSION__} · Built: ${date} ${time}`
 }
 
+const BUILD_INFO = formatBuildInfo()
+
 function App() {
   const [page, setPage] = useState(() =>
     window.location.pathname === SUBSCRIBE_PATH ? 'subscribe' : 'calendar'
@@ -162,7 +164,7 @@ function App() {
             {copied ? 'Copied!' : 'Copy link'}
           </button>
         </span>
-        <span className="app-foot-build">{formatBuildInfo()}</span>
+        <span className="app-foot-build">{BUILD_INFO}</span>
         <span className="app-foot-right">
           {page !== 'subscribe' && (
             <>
