@@ -109,6 +109,7 @@ function ListView({ events, currentDate, onMonthChange }) {
                   className={[isToday && 'today', isMonday && !isFirstRow && 'week-start']
                     .filter(Boolean)
                     .join(' ')}
+                  aria-current={isToday ? 'date' : undefined}
                 >
                   <td className="date-cell">
                     <div className="date-info">

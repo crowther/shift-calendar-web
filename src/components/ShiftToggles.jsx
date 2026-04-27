@@ -9,6 +9,7 @@ function ShiftToggles({ selectedShifts, onToggle, onSelectAll, onClearAll }) {
           <button
             key={shift}
             className={`shift-button ${selectedShifts.includes(shift) ? 'active' : ''}`}
+            aria-pressed={selectedShifts.includes(shift)}
             onClick={() => onToggle(shift)}
           >
             <span
