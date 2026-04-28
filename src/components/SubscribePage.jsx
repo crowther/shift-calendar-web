@@ -70,28 +70,6 @@ function SubscribePage() {
           )}
         </div>
       </div>
-
-      <div className="sub-section">
-        <div className="sub-section-header">How to subscribe</div>
-        <div className="sub-table sub-instructions">
-          <div className="sub-row">
-            <span className="sub-label">iPhone</span>
-            <span className="sub-instruction">
-              Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar
-            </span>
-          </div>
-          <div className="sub-row">
-            <span className="sub-label">Android</span>
-            <span className="sub-instruction">
-              Open calendar.google.com in a browser → Other calendars (+) → From URL
-              <span className="sub-instruction-note">
-                The Google Calendar app does not support subscribing directly — add it via the
-                website and it will sync to your phone.
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
